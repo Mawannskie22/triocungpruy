@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "prettier --write . && eslint . --fix",
+    "lint:check": "prettier --check . && eslint .",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "next": "16.4.3",
@@ -20,6 +22,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.3",
+    "prettier": "^3.9.10",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

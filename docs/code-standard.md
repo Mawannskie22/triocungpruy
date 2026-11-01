@@ -19,17 +19,18 @@
 
 ## 2. Penamaan
 
-| Jenis | Format | Contoh |
-|---|---|---|
-| Komponen React | PascalCase | `StepCategory.tsx`, `StatusTimeline` |
-| File lib, data, types | camelCase | `tickets.ts`, `duplicates.ts` |
-| Fungsi dan variabel | camelCase | `createTicketId`, `isWithinRadius` |
-| Konstanta | UPPER_SNAKE_CASE | `MAX_DESCRIPTION_LENGTH`, `DUPLICATE_RADIUS_M` |
-| Tipe dan interface | PascalCase | `Report`, `ReportStatus` |
-| Aset (gambar, ikon) | huruf kecil dengan tanda hubung | `hero-bundaran-hi.jpg` |
-| Folder | huruf kecil | `components/report/` |
+| Jenis                 | Format                          | Contoh                                         |
+| --------------------- | ------------------------------- | ---------------------------------------------- |
+| Komponen React        | PascalCase                      | `StepCategory.tsx`, `StatusTimeline`           |
+| File lib, data, types | camelCase                       | `tickets.ts`, `duplicates.ts`                  |
+| Fungsi dan variabel   | camelCase                       | `createTicketId`, `isWithinRadius`             |
+| Konstanta             | UPPER_SNAKE_CASE                | `MAX_DESCRIPTION_LENGTH`, `DUPLICATE_RADIUS_M` |
+| Tipe dan interface    | PascalCase                      | `Report`, `ReportStatus`                       |
+| Aset (gambar, ikon)   | huruf kecil dengan tanda hubung | `hero-bundaran-hi.jpg`                         |
+| Folder                | huruf kecil                     | `components/report/`                           |
 
 **Aturan nama:**
+
 - Gunakan kata kerja untuk fungsi (`saveReport`, `validateDescription`).
 - Gunakan kata benda untuk data (`report`, `category`).
 - Boolean diawali `is`, `has`, atau `can` (`isSubmitting`, `hasPhoto`).
@@ -42,6 +43,7 @@
 Komponen dipecah berdasarkan tanggung jawab, bukan berdasarkan ukuran.
 
 **Aturan:**
+
 - Satu komponen menampilkan satu bagian UI.
 - Komponen yang punya lebih dari satu alasan untuk berubah dipecah.
 - Komponen presentasi (menampilkan data) dipisah dari komponen container (mengambil dan mengatur data).
@@ -59,8 +61,12 @@ export function ReportForm() {
   return (
     <FormLayout step={step}>
       {step === 1 && <StepPhoto draft={draft} onChange={updateDraft} onNext={next} />}
-      {step === 2 && <StepCategory draft={draft} onChange={updateDraft} onNext={next} onBack={back} />}
-      {step === 3 && <StepLocation draft={draft} onChange={updateDraft} onSubmit={submit} onBack={back} />}
+      {step === 2 && (
+        <StepCategory draft={draft} onChange={updateDraft} onNext={next} onBack={back} />
+      )}
+      {step === 3 && (
+        <StepLocation draft={draft} onChange={updateDraft} onSubmit={submit} onBack={back} />
+      )}
     </FormLayout>
   );
 }
@@ -72,13 +78,13 @@ Validasi, penyimpanan, dan pembuatan tiket tidak ada di sini. Semuanya di `lib/`
 
 ## 4. Pemisahan Logika dan Tampilan
 
-| Lapisan | Lokasi | Tugas | Boleh berisi |
-|---|---|---|---|
-| Tampilan | `components/` | Menampilkan data | JSX, class CSS, event handler sederhana |
-| Hook | `hooks/` atau `lib/` | Mengelola state dan efek | `useState`, `useEffect`, pemanggilan `lib/` |
-| Logika bisnis | `lib/` | Aturan dan perhitungan | Fungsi murni, tanpa JSX |
-| Data | `data/` | Daftar tetap dan data simulasi | Konstanta, JSON |
-| Tipe | `types/` | Bentuk data | `type` dan `interface` |
+| Lapisan       | Lokasi               | Tugas                          | Boleh berisi                                |
+| ------------- | -------------------- | ------------------------------ | ------------------------------------------- |
+| Tampilan      | `components/`        | Menampilkan data               | JSX, class CSS, event handler sederhana     |
+| Hook          | `hooks/` atau `lib/` | Mengelola state dan efek       | `useState`, `useEffect`, pemanggilan `lib/` |
+| Logika bisnis | `lib/`               | Aturan dan perhitungan         | Fungsi murni, tanpa JSX                     |
+| Data          | `data/`              | Daftar tetap dan data simulasi | Konstanta, JSON                             |
+| Tipe          | `types/`             | Bentuk data                    | `type` dan `interface`                      |
 
 **Aturan:** file di `lib/` tidak boleh mengimpor komponen React. Dengan begitu, logika bisa diuji tanpa membuka halaman.
 
@@ -105,10 +111,14 @@ export function createTicketId(date: Date, randomCode: string): string {
 
 ```ts
 // Buruk
-function handle(r: any) { /* ... */ }
+function handle(r: any) {
+  /* ... */
+}
 
 // Baik
-function validateReport(input: ReportInput): ValidationResult { /* ... */ }
+function validateReport(input: ReportInput): ValidationResult {
+  /* ... */
+}
 ```
 
 ---
@@ -116,6 +126,7 @@ function validateReport(input: ReportInput): ValidationResult { /* ... */ }
 ## 6. Reuse: Kapan Memindahkan Kode
 
 Pindahkan ke modul bersama jika:
+
 - Kode yang sama muncul di dua tempat atau lebih.
 - Aturan bisnis perlu konsisten (misalnya format nomor tiket).
 - Komponen tampilan dipakai di lebih dari satu halaman.
@@ -123,6 +134,7 @@ Pindahkan ke modul bersama jika:
 Jangan dipindahkan jika baru dipakai sekali. Tunggu sampai ada kebutuhan kedua.
 
 **Komponen `ui/` yang wajib dibuat sekali:**
+
 - `Button` (varian utama kuning dan sekunder)
 - `Card`
 - `Badge` (diterima, diproses, selesai)
@@ -137,7 +149,9 @@ Jangan dipindahkan jika baru dipakai sekali. Tunggu sampai ada kebutuhan kedua.
 
 ```ts
 // Buruk
-if (description.length < 10) { /* ... */ }
+if (description.length < 10) {
+  /* ... */
+}
 
 // Baik
 // lib/validation.ts
@@ -168,7 +182,8 @@ export const MAX_DESCRIPTION_LENGTH = 500;
 ```ts
 // types/report.ts
 export type ReportStatus = "diterima" | "diproses" | "selesai";
-export type ReportCategory = "jalan-rusak" | "lampu-mati" | "sampah" | "genangan" | "parkir-liar" | "lainnya";
+export type ReportCategory =
+  "jalan-rusak" | "lampu-mati" | "sampah" | "genangan" | "parkir-liar" | "lainnya";
 ```
 
 ---

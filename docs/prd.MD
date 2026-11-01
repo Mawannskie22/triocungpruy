@@ -23,37 +23,40 @@ Landing page adalah pintu masuk website Lapor Balik. Dalam beberapa detik, pengu
 ## 2. Identitas Visual
 
 ### 2.1 Latar dan motif
+
 - **Latar utama:** motif batik sebagai pola dekoratif. Pola tidak dipakai di hero, yang tampil sebagai visual foto penuh. Pola dipakai di footer dan CTA akhir dengan opacity rendah, supaya teks tetap terbaca.
 - **Motif:** buat pola original yang terinspirasi unsur Jakarta dan Betawi (misalnya bentuk ondel-ondel yang disederhanakan, atau pola kembang khas Betawi). Hindari menyalin motif batik tertentu secara utuh.
 - **Visual kota:** foto nyata Jakarta (Monas, Kota Tua, jalan raya) dipakai sebagai latar hero atau kartu visual, dengan overlay gelap supaya kontras tetap aman.
 
 ### 2.2 Palet warna
 
-| Peran | Warna | Contoh pemakaian |
-|---|---|---|
-| Kuning emas | #F5B700 | Tombol utama, aksen ikon, highlight |
-| Merah | #C62828 | Status penting, peringatan, aksen batik |
-| Oranye | #F57C00 | Tombol sekunder, hover, badge status "Diproses" |
-| Hitam | #1A1A1A | Teks utama, latar navbar, overlay foto |
-| Putih | #FFFFFF | Teks di atas latar gelap, kartu konten |
+| Peran       | Warna   | Contoh pemakaian                                |
+| ----------- | ------- | ----------------------------------------------- |
+| Kuning emas | #F5B700 | Tombol utama, aksen ikon, highlight             |
+| Merah       | #C62828 | Status penting, peringatan, aksen batik         |
+| Oranye      | #F57C00 | Tombol sekunder, hover, badge status "Diproses" |
+| Hitam       | #1A1A1A | Teks utama, latar navbar, overlay foto          |
+| Putih       | #FFFFFF | Teks di atas latar gelap, kartu konten          |
 
 **Aturan pemakaian:**
+
 - Tombol utama selalu kuning dengan teks hitam, supaya kontras aman.
 - Merah hanya untuk hal yang perlu perhatian (status, peringatan), jangan dipakai untuk dekorasi besar.
 - Latar hero gelap (hitam dengan foto dan overlay) agar warna kuning dan putih menonjol.
 
 ### 2.3 Tipografi
+
 - Font utama: **Plus Jakarta Sans** (Google Fonts, gratis) untuk judul dan isi. Font ini dibuat oleh studio Indonesia dan sesuai dengan konteks Jakarta.
 - Alternatif jika tim ingin kontras judul lebih tegas: Montserrat untuk judul hero, dan Plus Jakarta Sans untuk isi.
 - Judul hero besar dan tebal, teks isi minimal 16 px di HP.
 
 ## 3. Pengguna Landing Page
 
-| Pengguna | Yang dicari di halaman ini |
-|---|---|
-| Warga Jakarta yang punya masalah di lingkungannya | Cara cepat melapor, dan apakah laporannya akan ditindak |
-| Warga yang ragu melapor karena takut privasi | Penjelasan bahwa izin minimal dan identitas dijaga |
-| Juri lomba | Kejelasan tema, kegunaan, dan kualitas tampilan dalam waktu singkat |
+| Pengguna                                          | Yang dicari di halaman ini                                          |
+| ------------------------------------------------- | ------------------------------------------------------------------- |
+| Warga Jakarta yang punya masalah di lingkungannya | Cara cepat melapor, dan apakah laporannya akan ditindak             |
+| Warga yang ragu melapor karena takut privasi      | Penjelasan bahwa izin minimal dan identitas dijaga                  |
+| Juri lomba                                        | Kejelasan tema, kegunaan, dan kualitas tampilan dalam waktu singkat |
 
 ## 4. Struktur Halaman
 
@@ -73,12 +76,14 @@ Urutan dari atas ke bawah:
 ### 5.1 Navbar
 
 **Layout (dari kiri ke kanan):**
+
 - Logo dan nama **Lapor Balik** (kiri).
 - Menu di tengah: Beranda, Layanan, Cara Melapor, Tentang.
 - Di kanan: ikon cari (opsional), avatar atau ikon akun (opsional, untuk petugas nanti), dan ikon menu.
 - Tombol **Lapor Sekarang** berwarna kuning di kanan navbar.
 
 **Perilaku:**
+
 - Latar hitam transparan, tetap di atas saat digulir (sticky).
 - Di HP, menu tengah berubah menjadi ikon hamburger. Tombol Lapor Sekarang tetap terlihat.
 - Setiap menu melompat ke bagian yang sesuai (anchor).
@@ -90,6 +95,7 @@ Urutan dari atas ke bawah:
 Hero mengikuti referensi yang sudah disepakati: teks di kiri, kumpulan kartu foto bertumpuk di kanan.
 
 **Sisi kiri (teks):**
+
 - Judul besar dua baris, contoh: **"Laporkan masalah kotamu, pantau sampai beres."**
 - Subjudul satu kalimat: "Warga Jakarta bisa melapor jalan rusak, lampu mati, sampah, dan genangan, lalu melihat statusnya sampai selesai."
 - Tombol utama kuning: **Lapor Sekarang** dengan ikon panah.
@@ -97,6 +103,7 @@ Hero mengikuti referensi yang sudah disepakati: teks di kiri, kumpulan kartu fot
 - Keterangan kecil: "Tanpa login untuk melapor."
 
 **Sisi kanan (visual):**
+
 - Visual kota ditampilkan satu per satu, bukan sekaligus. Urutan dan waktunya:
   1. Slide pertama: Bundaran HI (langsung tampil).
   2. Slide kedua: Monumen Nasional, muncul 0,5 detik setelah slide pertama.
@@ -107,14 +114,17 @@ Hero mengikuti referensi yang sudah disepakati: teks di kiri, kumpulan kartu fot
 - Maksimal tiga foto supaya ringan.
 
 **Latar hero:**
+
 - Hero berupa visual foto penuh (full-bleed) Jakarta, tanpa pola batik.
 - Overlay gradasi dari hitam ke transparan di sisi kiri supaya teks tetap terbaca.
 
 **Perilaku responsif:**
+
 - Di HP, teks di atas, lalu kartu foto ditampilkan satu per satu dengan geser (swipe). Tombol Lapor Sekarang tetap satu layar dengan judul.
 - Di laptop, dua kolom seperti referensi.
 
 **Kriteria penerimaan:**
+
 - Judul dan tombol utama terlihat tanpa menggulir di HP maupun laptop.
 - Teks tetap terbaca di atas foto (kontras minimal sesuai standar).
 
@@ -140,12 +150,12 @@ Tiga tujuan dengan ikon dan satu kalimat pendukung:
 
 Maksimal empat kartu:
 
-| Layanan | Deskripsi singkat | Status di MVP |
-|---|---|---|
-| Lapor masalah | Kirim laporan dengan foto, kategori, dan lokasi | Ada |
-| Cek status | Pantau laporan dengan nomor tiket | Ada |
-| Konfirmasi warga | Tandai laporan sudah beres atau belum | Pelengkap |
-| Peta laporan | Lihat laporan di sekitar kamu | Pelengkap |
+| Layanan          | Deskripsi singkat                               | Status di MVP |
+| ---------------- | ----------------------------------------------- | ------------- |
+| Lapor masalah    | Kirim laporan dengan foto, kategori, dan lokasi | Ada           |
+| Cek status       | Pantau laporan dengan nomor tiket               | Ada           |
+| Konfirmasi warga | Tandai laporan sudah beres atau belum           | Pelengkap     |
+| Peta laporan     | Lihat laporan di sekitar kamu                   | Pelengkap     |
 
 **Aturan:** layanan yang ditampilkan harus berjalan di prototipe. Layanan pelengkap diberi label "Segera hadir" atau disembunyikan.
 
@@ -185,10 +195,10 @@ Tambahan: penjelasan "Lokasi hanya dipakai untuk menandai titik laporan. Kamu bi
 
 ## 7. Responsif
 
-| Ukuran layar | Perilaku |
-|---|---|
-| HP (360 px) | Satu kolom, menu hamburger, kartu foto digeser |
-| Tablet (768 px) | Dua kolom untuk kartu layanan |
+| Ukuran layar             | Perilaku                                                    |
+| ------------------------ | ----------------------------------------------------------- |
+| HP (360 px)              | Satu kolom, menu hamburger, kartu foto digeser              |
+| Tablet (768 px)          | Dua kolom untuk kartu layanan                               |
 | Laptop (1280 px ke atas) | Hero full visual foto, teks di kiri, animasi foto berurutan |
 
 ## 8. Kebutuhan Non-Fungsional

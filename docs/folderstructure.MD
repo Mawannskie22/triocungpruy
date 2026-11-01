@@ -89,20 +89,20 @@ lapor-balik/
 
 ## 2. Fungsi Setiap Bagian
 
-| Folder | Isi | Aturan |
-|---|---|---|
-| `app/` | Halaman (route) | `page.tsx` hanya menyusun komponen, tidak berisi logika berat |
-| `components/layout/` | Navbar, menu HP, footer | Dipakai di semua halaman lewat `layout.tsx` |
-| `components/hero/` | Hero dan animasi kota | Animasi berjalan sekali saat halaman dibuka |
-| `components/landing/` | Bagian-bagian landing | Urutan mengikuti PRD |
-| `components/report/` | Form lapor 3 langkah | Setiap langkah berdiri sendiri |
-| `components/status/` | Input nomor tiket dan timeline | Dipakai di halaman `status` |
-| `components/ui/` | Tombol, kartu, badge, label | Dipakai ulang di seluruh situs |
-| `lib/` | Logika bisnis | Bisa diuji tanpa membuka halaman |
-| `data/` | Kategori, kota, data simulasi | Satu sumber untuk setiap daftar |
-| `types/` | Tipe data bersama | Dipakai di `lib/`, `components/`, dan `data/` |
-| `public/` | Gambar, pola, ikon | Nama file huruf kecil dan pakai tanda hubung |
-| `docs/` | PRD dan spec | Ikut berubah bersama kode |
+| Folder                | Isi                            | Aturan                                                        |
+| --------------------- | ------------------------------ | ------------------------------------------------------------- |
+| `app/`                | Halaman (route)                | `page.tsx` hanya menyusun komponen, tidak berisi logika berat |
+| `components/layout/`  | Navbar, menu HP, footer        | Dipakai di semua halaman lewat `layout.tsx`                   |
+| `components/hero/`    | Hero dan animasi kota          | Animasi berjalan sekali saat halaman dibuka                   |
+| `components/landing/` | Bagian-bagian landing          | Urutan mengikuti PRD                                          |
+| `components/report/`  | Form lapor 3 langkah           | Setiap langkah berdiri sendiri                                |
+| `components/status/`  | Input nomor tiket dan timeline | Dipakai di halaman `status`                                   |
+| `components/ui/`      | Tombol, kartu, badge, label    | Dipakai ulang di seluruh situs                                |
+| `lib/`                | Logika bisnis                  | Bisa diuji tanpa membuka halaman                              |
+| `data/`               | Kategori, kota, data simulasi  | Satu sumber untuk setiap daftar                               |
+| `types/`              | Tipe data bersama              | Dipakai di `lib/`, `components/`, dan `data/`                 |
+| `public/`             | Gambar, pola, ikon             | Nama file huruf kecil dan pakai tanda hubung                  |
+| `docs/`               | PRD dan spec                   | Ikut berubah bersama kode                                     |
 
 ---
 
