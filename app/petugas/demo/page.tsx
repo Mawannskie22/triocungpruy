@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
-import { OfficerDemo } from "@/components/officer/OfficerDemo";
 
 export const metadata: Metadata = {
-  title: "Panel Petugas Demo | Lapor Balik",
+  title: "Dashboard Petugas | Lapor Balik",
   robots: { index: false, follow: false },
 };
 
-export default function OfficerDemoPage() {
+export default function OfficerDashboardPage() {
   return (
-    <main className="officer-page">
-      <OfficerDemo />
-    </main>
+    <div className="officer-heading">
+      <div>
+        <span className="officer-context">DASHBOARD PETUGAS</span>
+        <h1>Ringkasan laporan</h1>
+        <p>Chart dan statistik akan diisi pada langkah berikutnya.</p>
+      </div>
+    </div>
   );
 }

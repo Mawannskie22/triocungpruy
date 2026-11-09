@@ -2458,3 +2458,109 @@ input[type="text"],
 .officer-login-loading {
   color: var(--muted);
 }
+
+/* Officer shell */
+.officer-sidebar {
+  display: flex;
+  flex-direction: column;
+}
+.officer-sidebar-label {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+.officer-sidebar-nav {
+  display: grid;
+  gap: 4px;
+}
+.officer-sidebar-nav a {
+  display: block;
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: #4c493f;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.officer-sidebar-nav a:hover {
+  background: rgba(26, 26, 26, 0.05);
+}
+.officer-sidebar-nav a.active {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: inset 3px 0 0 var(--gold);
+}
+.officer-sidebar-footer {
+  margin-top: auto;
+  padding-top: 22px;
+  border-top: 1px solid #e2ded3;
+}
+.officer-sidebar-footer strong {
+  font-size: 0.9rem;
+}
+.officer-sidebar-footer span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+.officer-logout {
+  width: 100%;
+  margin-top: 12px;
+  padding: 9px 12px;
+  border: 1px solid #d6d2c7;
+  border-radius: 4px;
+  background: transparent;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+.officer-logout:hover {
+  background: #fff;
+}
+.officer-mobile-nav {
+  display: none;
+}
+.officer-guard-loading {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  background: #f2f0e9;
+}
+
+@media (max-width: 1050px) {
+  .officer-mobile-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 18px 0;
+    overflow-x: auto;
+  }
+  .officer-mobile-nav a {
+    flex: none;
+    padding: 8px 12px;
+    border: 1px solid #e6e2d9;
+    border-radius: 999px;
+    background: #fff;
+    font-size: 0.82rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .officer-mobile-nav a.active {
+    border-color: var(--ink);
+    background: var(--ink);
+    color: #fff;
+  }
+  .officer-mobile-nav button {
+    flex: none;
+    margin-left: auto;
+    padding: 8px 12px;
+    border: 1px solid #d6d2c7;
+    border-radius: 999px;
+    background: transparent;
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+}
