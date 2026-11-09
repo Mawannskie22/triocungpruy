@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="id" className={plusJakartaSans.className}>
+    <html lang="id" className={plusJakartaSans.className} data-scroll-behavior="smooth">
       <body>{children}</body>
     </html>
   );
