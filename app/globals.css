@@ -2276,9 +2276,15 @@ input[type="text"],
 /* A city field, with the reports as the only bright marks. */
 .report-map-section {
   padding: 95px 0 100px;
-  background: #eeeae0;
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #fffaf0 45%,
+    #fff3cc 100%
+  );
   border-bottom: 1px solid #d9d2c4;
 }
+
 .report-map-heading {
   display: flex;
   align-items: end;
