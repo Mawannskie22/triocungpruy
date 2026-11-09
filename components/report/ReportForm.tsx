@@ -31,16 +31,28 @@ export function ReportForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   function next() {
-    const message =
-      step === 1
-        ? validateCategory(draft.category)
-        : draft.category === "lainnya"
-          ? validateDescription(draft.description)
-          : null;
-    if (message) {
-      setError(message);
-      return;
+    if (step === 1) {
+      const message = validateCategory(draft.category);
+      if (message) {
+        setError(message);
+        return;
+      }
     }
+
+    if (step === 2) {
+      if (draft.category === "lainnya") {
+        const message = validateDescription(draft.description);
+        if (message) {
+          setError(message);
+          return;
+        }
+      }
+      if (!draft.photo) {
+        setError("Foto pendukung wajib diunggah. Pilih foto terlebih dahulu.");
+        return;
+      }
+    }
+
     setError("");
     setStep(step + 1);
   }
@@ -237,7 +249,7 @@ export function ReportForm() {
           <div>
             <span className="eyebrow">LANGKAH 02 / 03</span>
             <h2>Tambahkan bukti.</h2>
-            <p>Foto membantu petugas melihat kondisi sebenarnya. Kamu boleh melewatinya.</p>
+            <p>Foto membantu petugas melihat kondisi sebenarnya.</p>
             {draft.category === "lainnya" && (
               <>
                 <label className="field-label" htmlFor="description">
@@ -257,7 +269,7 @@ export function ReportForm() {
               </>
             )}
             <label className="field-label" htmlFor="photo">
-              Foto pendukung <small>(opsional)</small>
+              Foto pendukung <span>*</span>
             </label>
             <input
               id="photo"
