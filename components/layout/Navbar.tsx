@@ -69,9 +69,12 @@ export function Navbar() {
           <Link href="/status" className="mobile-status" onClick={() => setIsOpen(false)}>
             Cek Status
           </Link>
+          <Link href="/lapor" className="mobile-lapor" onClick={() => setIsOpen(false)}>
+            Lapor Sekarang <span aria-hidden="true">↗</span>
+          </Link>
         </div>
         <div className="nav-actions">
-          <Link href="/lapor" className="button button-primary nav-cta">
+          <Link href="/lapor" className="button button-primary nav-cta" aria-label="Lapor Sekarang">
             Lapor Sekarang <span aria-hidden="true">↗</span>
           </Link>
           <button

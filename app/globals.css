@@ -200,7 +200,8 @@ h3 {
   gap: 12px;
 }
 .menu-toggle,
-.mobile-status {
+.mobile-status,
+.mobile-lapor {
   display: none;
 }
 .hero {
@@ -971,7 +972,7 @@ input[type="text"],
     width: 100%;
   }
   .nav-links {
-    display: none;
+    display: flex;
     position: absolute;
     top: 64px;
     left: 0;
@@ -983,9 +984,15 @@ input[type="text"],
     gap: 0;
     border-top: 1px solid #ffffff33;
     box-shadow: 0 15px 25px #0004;
+    transform: translateX(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
   }
   .nav-links.is-open {
-    display: flex;
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
   }
   .nav-links a {
     font-size: 0.92rem;
@@ -993,6 +1000,27 @@ input[type="text"],
   }
   .mobile-status {
     display: block;
+  }
+  .nav-cta {
+    display: none;
+  }
+  .mobile-lapor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+    padding: 13px 16px;
+    background: var(--gold, #f5c842);
+    color: #111;
+    font-weight: 800;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .mobile-lapor:hover {
+    opacity: 0.88;
   }
   .hero {
     height: auto;
