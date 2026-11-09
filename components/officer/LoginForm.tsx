@@ -41,7 +41,7 @@ export function LoginForm() {
       </span>
       <span className="eyebrow">RUANG PETUGAS</span>
       <h1>Masuk untuk mulai.</h1>
-      <p>Gunakan akun petugas demo untuk membuka dashboard.</p>
+      <p>Gunakan akun petugas untuk membuka dashboard.</p>
       <form onSubmit={submit}>
         <label className="field-label" htmlFor="officer-email">
           Email
@@ -81,7 +81,7 @@ export function LoginForm() {
         </button>
       </form>
       <div className="officer-login-hint">
-        <strong>AKUN DEMO</strong>
+        <strong>AKUN PETUGAS</strong>
         <span>
           {OFFICER_EMAIL} / {OFFICER_PASSWORD}
         </span>

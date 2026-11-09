@@ -359,10 +359,7 @@ export function TicketWorkspace() {
                         accept="image/jpeg,image/png,image/webp"
                         onChange={(event) => chooseEvidence(event.target.files?.[0])}
                       />
-                      <small>
-                        Wajib diunggah. JPG, PNG, atau WebP, maksimal 1 MB. Gunakan foto uji untuk
-                        demo.
-                      </small>
+                      <small>Wajib diunggah. JPG, PNG, atau WebP, maksimal 1 MB.</small>
                       {evidence && (
                         <Image
                           src={evidence}
@@ -408,11 +405,6 @@ export function TicketWorkspace() {
           )}
         </div>
       </div>
-
-      <p className="officer-disclaimer">
-        Panel ini hanya untuk simulasi. Data disimpan di browser yang sama dan belum dikirim ke
-        instansi.
-      </p>
     </div>
   );
 }

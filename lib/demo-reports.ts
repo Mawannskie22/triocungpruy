@@ -173,12 +173,14 @@ export function createDemoReports(): Report[] {
             photo: placeholderImage(
               getCategoryLabel(category),
               CATEGORY_HUES[category],
-              "Foto contoh laporan warga",
+              "Foto laporan warga",
             ),
           }
         : {}),
       ...(status === "selesai"
-        ? { resolutionPhoto: placeholderImage("Bukti penyelesaian", 145, "Foto contoh untuk demo") }
+        ? {
+            resolutionPhoto: placeholderImage("Bukti penyelesaian", 145, "Foto bukti penyelesaian"),
+          }
         : {}),
     });
   }

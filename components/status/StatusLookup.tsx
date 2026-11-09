@@ -77,7 +77,6 @@ function Lookup() {
         <article className="result-panel">
           <div className="result-top">
             <div>
-              <span className="eyebrow">DATA SIMULASI</span>
               <h2>{report.id}</h2>
             </div>
             <span className={`status-badge status-${report.status}`}>
@@ -121,8 +120,7 @@ function Lookup() {
                     </p>
                     {event && (
                       <small className="timeline-time">
-                        {formatTime(event.at)} ·{" "}
-                        {event.actor === "warga" ? "Warga" : "Petugas demo"}
+                        {formatTime(event.at)} · {event.actor === "warga" ? "Warga" : "Petugas"}
                       </small>
                     )}
                   </div>
@@ -136,7 +134,7 @@ function Lookup() {
               {report.resolutionPhoto ? (
                 <Image
                   src={report.resolutionPhoto}
-                  alt="Foto bukti penyelesaian yang diunggah petugas demo"
+                  alt="Foto bukti penyelesaian yang diunggah petugas"
                   width={800}
                   height={500}
                   unoptimized
@@ -156,10 +154,6 @@ function Lookup() {
               <p className="confirmed-note">✓ Kamu sudah mengonfirmasi laporan ini.</p>
             )}
           </div>
-          <p className="demo-note">
-            Pembaruan di atas berasal dari panel petugas demo dalam browser ini dan belum terhubung
-            ke instansi.
-          </p>
         </article>
       )}
       <div className="status-help">

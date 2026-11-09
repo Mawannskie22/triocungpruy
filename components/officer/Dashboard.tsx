@@ -19,7 +19,7 @@ import {
   YAxis,
 } from "recharts";
 import { getStatusLabel } from "@/data/report-status";
-import { loadOrSeedReports, resetDemoReports } from "@/lib/demo-reports";
+import { loadOrSeedReports } from "@/lib/demo-reports";
 import { buildOfficerStats, STATUS_COLORS } from "@/lib/officer-stats";
 import type { Report } from "@/types/report";
 
@@ -54,11 +54,6 @@ export function Dashboard() {
 
   const stats = useMemo(() => buildOfficerStats(reports), [reports]);
 
-  function resetDemoData() {
-    if (!window.confirm("Ganti semua laporan dengan data contoh baru?")) return;
-    setReports(resetDemoReports());
-  }
-
   if (!loaded) {
     return <p className="officer-empty">Memuat dashboard...</p>;
   }
@@ -71,9 +66,6 @@ export function Dashboard() {
           <h1>Ringkasan laporan</h1>
           <p>Pantau volume laporan, sebaran kategori, dan kecepatan penyelesaian.</p>
         </div>
-        <button type="button" className="officer-text-button" onClick={resetDemoData}>
-          Isi ulang data contoh
-        </button>
       </div>
 
       <div className="officer-kpis">

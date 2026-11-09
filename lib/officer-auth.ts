@@ -1,7 +1,8 @@
 const SESSION_KEY = "lapor-balik-officer-session-v1";
 
 export const OFFICER_EMAIL = "petugas@laporbalik.id";
-export const OFFICER_PASSWORD = "demo123";
+export const OFFICER_PASSWORD = "petugas123";
+export const OFFICER_NAME = "Petugas Lapangan";
 
 export type OfficerSession = {
   email: string;
@@ -14,7 +15,7 @@ export function signIn(email: string, password: string): OfficerSession | null {
 
   const session: OfficerSession = {
     email: OFFICER_EMAIL,
-    name: "Petugas Demo",
+    name: OFFICER_NAME,
     signedInAt: new Date().toISOString(),
   };
 
@@ -37,7 +38,7 @@ export function getSession(): OfficerSession | null {
 
     return {
       email: value.email,
-      name: value.name,
+      name: OFFICER_NAME,
       signedInAt: typeof value.signedInAt === "string" ? value.signedInAt : "",
     };
   } catch {

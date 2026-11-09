@@ -68,7 +68,7 @@ export function ReportForm() {
       return;
     }
     if (file.size > 1_000_000) {
-      setError("Ukuran foto maksimal 1 MB untuk demo ini. Pilih foto yang lebih kecil.");
+      setError("Ukuran foto maksimal 1 MB. Pilih foto yang lebih kecil.");
       return;
     }
     const reader = new FileReader();
@@ -226,10 +226,6 @@ export function ReportForm() {
               Buat laporan lain
             </button>
           </div>
-          <p className="demo-note">
-            Data simulasi. Laporan ini hanya tersimpan di browser perangkat ini dan belum dikirim ke
-            instansi.
-          </p>
         </div>
       </div>
     );
@@ -390,9 +386,6 @@ export function ReportForm() {
           </button>
         </div>
       </div>
-      <p className="demo-note">
-        Data simulasi untuk demo. Laporan disimpan di browser ini, bukan dikirim ke pemerintah.
-      </p>
     </div>
   );
 }
