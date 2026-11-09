@@ -24,8 +24,8 @@ Buka `http://localhost:3000`. Jika PowerShell memblokir `npm.ps1`, gunakan `npm.
 
 ## Progress saat ini
 
-- **Landing page (`/`)** sudah menampilkan penjelasan layanan, cara melapor, dan tautan menuju form serta halaman cek status.
-- **Buat laporan (`/lapor`)** sudah berjalan dalam tiga langkah: deskripsi, kategori, dan lokasi. Foto maksimal 1 MB dan akses GPS bersifat opsional. Setelah berhasil, warga mendapat nomor tiket.
+- **Landing page (`/`)** dibuka dengan splash animasi mobil dan plang kategori laporan sekali tiap sesi browser; tersedia tombol lewati dan dukungan reduced motion. Setelah itu tampil peta interaktif Jakarta. Ikon penanda mengikuti kategori laporan; filter, daftar, dan kartu ringkas mengarah ke tiket yang tersimpan di browser.
+- **Buat laporan (`/lapor`)** sudah berjalan dalam tiga langkah: deskripsi, kategori, dan lokasi. Pada langkah lokasi, warga dapat memilih pin peta atau memakai GPS. Laporan tanpa koordinat tetap tersimpan, tetapi tidak tampil sebagai penanda peta.
 - **Cek status (`/status`)** menampilkan empat tahap, catatan dan waktu tindak lanjut baru, serta foto bukti bila dilampirkan. Warga dapat memberi konfirmasi setelah tahap selesai.
 - **Panel petugas demo (`/petugas/demo`)** menampilkan laporan dari browser yang sama. Petugas simulasi dapat menambahkan catatan, memajukan tahap `diterima` → `diverifikasi` → `diproses` → `selesai`, dan melampirkan foto bukti penyelesaian.
 - **Pencegahan kiriman berulang** membatasi satu laporan per menit dan menolak laporan dengan kategori, alamat, serta deskripsi identik dalam 24 jam pada browser yang sama.
@@ -40,7 +40,7 @@ Buka `http://localhost:3000`. Jika PowerShell memblokir `npm.ps1`, gunakan `npm.
 
 ## Batasan prototipe
 
-Laporan hanya tersimpan di `localStorage` browser. Data dapat hilang jika penyimpanan browser dibersihkan, tidak tersedia di perangkat lain, dan belum dikirim ke instansi. Panel petugas demo tidak memiliki login dan hanya mengubah data pada browser ini. Jeda serta pemeriksaan duplikat di browser dapat dilewati dengan membersihkan penyimpanan; sistem nyata memerlukan pembatasan di server dan autentikasi petugas. Peta pin belum tersedia; lokasi diisi manual atau memakai koordinat GPS perangkat.
+Laporan hanya tersimpan di `localStorage` browser. Data dapat hilang jika penyimpanan browser dibersihkan, tidak tersedia di perangkat lain, dan belum dikirim ke instansi. Peta mengisi 48 laporan contoh satu kali jika belum ada penanda demo; titiknya perkiraan untuk simulasi. Peta dasar menggunakan ubin OpenStreetMap dan memerlukan koneksi internet. Panel petugas demo tidak memiliki login dan hanya mengubah data pada browser ini. Jeda serta pemeriksaan duplikat di browser dapat dilewati dengan membersihkan penyimpanan; sistem nyata memerlukan pembatasan di server dan autentikasi petugas.
 
 Hero memakai foto Bundaran HI yang sudah tersedia di proyek serta dua ilustrasi AI untuk Monas dan Kota Tua. Ketiganya memiliki versi potret hasil olahan AI untuk layar mobile agar landmark tidak terpotong. Ilustrasi tersebut diberi label di tampilan.
 

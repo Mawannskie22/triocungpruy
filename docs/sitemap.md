@@ -4,11 +4,11 @@ Sitemap ini memisahkan pengalaman warga, panel petugas demo yang berjalan dalam 
 
 ## Area warga — tersedia
 
-| Halaman      | Rute      | Isi dan tindakan utama                                                                                                                 |
-| ------------ | --------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| Beranda      | `/`       | Penjelasan layanan, cara melapor, tombol untuk membuat laporan dan mengecek status.                                                    |
-| Buat laporan | `/lapor`  | Form tiga langkah: ceritakan masalah, pilih kategori, isi lokasi. Foto dan GPS opsional. Setelah berhasil, warga menerima nomor tiket. |
-| Cek status   | `/status` | Cari laporan dengan nomor tiket, lihat empat tahap serta bukti penyelesaian bila tersedia, lalu konfirmasi setelah selesai.            |
+| Halaman      | Rute      | Isi dan tindakan utama                                                                                                      |
+| ------------ | --------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Beranda      | `/`       | Penjelasan layanan dan peta Jakarta berisi penanda laporan, filter kategori, kartu ringkas, serta tautan tiket.             |
+| Buat laporan | `/lapor`  | Form tiga langkah: pilih kategori, unggah foto, isi alamat, dan pilih pin peta atau GPS bila ingin menandai titik.          |
+| Cek status   | `/status` | Cari laporan dengan nomor tiket, lihat empat tahap serta bukti penyelesaian bila tersedia, lalu konfirmasi setelah selesai. |
 
 Saat ini laporan tersimpan di `localStorage`. Pencarian tiket hanya bekerja pada browser yang sama. Warga dapat membaca perkembangan, sedangkan perubahan tahap dilakukan lewat panel petugas demo.
 

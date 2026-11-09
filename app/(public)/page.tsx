@@ -6,18 +6,22 @@ import { ServiceCards } from "@/components/landing/ServiceCards";
 import { HowToReport } from "@/components/landing/HowToReport";
 import { FinalCta } from "@/components/landing/FinalCta";
 import { LandingMotion } from "@/components/landing/LandingMotion";
+import { SplashScreen } from "@/components/landing/SplashScreen";
 
 export default function Home() {
   return (
-    <main>
-      <Hero />
-      <ReportMapSection />
-      <WhyCards />
-      <GoalsList />
-      <ServiceCards />
-      <HowToReport />
-      <FinalCta />
-      <LandingMotion />
-    </main>
+    <>
+      <SplashScreen />
+      <main>
+        <Hero />
+        <ReportMapSection />
+        <WhyCards />
+        <GoalsList />
+        <ServiceCards />
+        <HowToReport />
+        <FinalCta />
+        <LandingMotion />
+      </main>
+    </>
   );
 }
