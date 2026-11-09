@@ -2774,3 +2774,79 @@ input[type="text"],
     grid-column: auto;
   }
 }
+
+/* Officer tickets */
+.officer-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 26px 0 4px;
+}
+.officer-search {
+  flex: 1 1 260px;
+  min-height: 40px;
+  padding: 9px 12px;
+  border: 1px solid #d0cbc0;
+  border-radius: 4px;
+  background: #fff;
+  color: var(--ink);
+}
+.officer-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.officer-filter-bar button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 11px;
+  border: 1px solid #e0dbcd;
+  border-radius: 999px;
+  background: #fff;
+  color: #4c493f;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.officer-filter-bar button span {
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: #f2eee3;
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+}
+.officer-filter-bar button.active {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
+}
+.officer-filter-bar button.active span {
+  background: rgba(255, 255, 255, 0.18);
+}
+.officer-queue .officer-report-list {
+  max-height: 640px;
+  overflow-y: auto;
+}
+.officer-update label span {
+  color: var(--red);
+}
+
+@media (max-width: 700px) {
+  .officer-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .officer-search {
+    flex: none;
+    width: 100%;
+  }
+  .officer-filter-bar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .officer-filter-bar button {
+    flex: none;
+  }
+}
