@@ -48,7 +48,7 @@ export function ReportForm() {
         }
       }
       if (!draft.photo) {
-        setError("Foto pendukung wajib diunggah. Pilih foto terlebih dahulu.");
+        setError("Foto tempat kejadian wajib diunggah. Pilih foto terlebih dahulu.");
         return;
       }
     }
@@ -269,7 +269,7 @@ export function ReportForm() {
               </>
             )}
             <label className="field-label" htmlFor="photo">
-              Foto pendukung <span>*</span>
+              Foto Tempat Kejadian <span>*</span>
             </label>
             <input
               id="photo"
