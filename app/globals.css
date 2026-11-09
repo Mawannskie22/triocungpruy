@@ -2462,6 +2462,11 @@ input[type="text"],
 
 /* Officer shell */
 .officer-sidebar {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
