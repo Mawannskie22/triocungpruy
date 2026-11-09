@@ -229,6 +229,11 @@ h3 {
     object-position: var(--mobile-pos, center center);
   }
 }
+@media (max-width: 700px) {
+  .hero-image {
+    object-position: var(--mobile-pos, center center);
+  }
+}
 .hero-shade {
   position: absolute;
   inset: 0;
