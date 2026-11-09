@@ -1,6 +1,8 @@
-const WINDOW_MS = 60_000;
-const MAX_REQUESTS = 3;
+const MAX_REQUESTS_PER_DAY = 5;
 const MAX_TRACKED_IPS = 1_000;
+const DAY_MS = 24 * 60 * 60 * 1000;
+// WIB (UTC+7). Makes "besok" mean the next midnight in Jakarta time.
+const TIMEZONE_OFFSET_MS = 7 * 60 * 60 * 1000;
 
 type Bucket = { count: number; resetAt: number };
 
@@ -12,6 +14,10 @@ export type RateLimitResult = {
 };
 
 const buckets = new Map<string, Bucket>();
+
+function nextResetAt(now: number): number {
+  return Math.floor((now + TIMEZONE_OFFSET_MS) / DAY_MS + 1) * DAY_MS - TIMEZONE_OFFSET_MS;
+}
 
 function prune(now: number): void {
   for (const [ip, bucket] of buckets) {
@@ -31,19 +37,19 @@ export function checkRateLimit(ip: string): RateLimitResult {
   const bucket = buckets.get(ip);
 
   if (!bucket || bucket.resetAt <= now) {
-    buckets.set(ip, { count: 1, resetAt: now + WINDOW_MS });
+    buckets.set(ip, { count: 1, resetAt: nextResetAt(now) });
     return {
       allowed: true,
-      limit: MAX_REQUESTS,
-      remaining: MAX_REQUESTS - 1,
+      limit: MAX_REQUESTS_PER_DAY,
+      remaining: MAX_REQUESTS_PER_DAY - 1,
       retryAfterSeconds: 0,
     };
   }
 
-  if (bucket.count >= MAX_REQUESTS) {
+  if (bucket.count >= MAX_REQUESTS_PER_DAY) {
     return {
       allowed: false,
-      limit: MAX_REQUESTS,
+      limit: MAX_REQUESTS_PER_DAY,
       remaining: 0,
       retryAfterSeconds: Math.max(1, Math.ceil((bucket.resetAt - now) / 1000)),
     };
@@ -52,8 +58,8 @@ export function checkRateLimit(ip: string): RateLimitResult {
   bucket.count += 1;
   return {
     allowed: true,
-    limit: MAX_REQUESTS,
-    remaining: MAX_REQUESTS - bucket.count,
+    limit: MAX_REQUESTS_PER_DAY,
+    remaining: MAX_REQUESTS_PER_DAY - bucket.count,
     retryAfterSeconds: 0,
   };
 }

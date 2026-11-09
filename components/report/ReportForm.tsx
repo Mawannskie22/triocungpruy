@@ -332,13 +332,6 @@ export function ReportForm() {
             <span aria-hidden="true">↗</span>
           </button>
         </div>
-        {step === 3 && (
-          <p className="field-hint">
-            Pada demo ini, server membatasi 3 kiriman per menit untuk setiap alamat IP. Laporan
-            dengan isi, kategori, dan alamat yang sama dalam 24 jam akan diarahkan ke tiket
-            sebelumnya.
-          </p>
-        )}
       </div>
       <p className="demo-note">
         Data simulasi untuk demo. Laporan disimpan di browser ini, bukan dikirim ke pemerintah.

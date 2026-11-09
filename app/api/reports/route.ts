@@ -24,7 +24,7 @@ export async function POST(request: Request) {
   if (!limit.allowed) {
     return Response.json(
       {
-        error: `Terlalu banyak laporan dari jaringan ini. Coba lagi dalam ${limit.retryAfterSeconds} detik.`,
+        error: `Kamu sudah melaporkan ${limit.limit} kali untuk hari ini. Lapor lagi besok.`,
       },
       { status: 429, headers: { "Retry-After": String(limit.retryAfterSeconds) } },
     );
