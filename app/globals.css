@@ -2654,16 +2654,14 @@ input[type="text"],
   background: #0a1322;
   color: #fff0ce;
   opacity: 1;
-  transition:
-    opacity 0.6s ease,
-    visibility 0.6s ease;
+  will-change: transform;
+  transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1);
 }
 html[data-splash-seen="1"] .splash-screen {
   display: none;
 }
 .splash-screen--leaving {
-  opacity: 0;
-  visibility: hidden;
+  transform: translateY(-100%);
   pointer-events: none;
 }
 .splash-scene {

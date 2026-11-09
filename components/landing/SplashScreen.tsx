@@ -7,8 +7,8 @@ import type { ReportCategory } from "@/types/report";
 
 const SESSION_KEY = "lapor-balik-splash-seen-v1";
 const DRIVE_DURATION = 2600;
-const ARRIVAL_HOLD = 500;
-const EXIT_DURATION = 600;
+const ARRIVAL_HOLD = 300;
+const EXIT_DURATION = 750;
 
 const roadsideSigns: { category: ReportCategory; label: string; side: "left" | "right" }[] = [
   { category: "jalan-rusak", label: "Jalan rusak", side: "left" },
@@ -116,7 +116,7 @@ export function SplashScreen() {
         }
         document.documentElement.dataset.splashSeen = "1";
         setVisible(false);
-      }, 350),
+      }, EXIT_DURATION),
     ];
   }
 
