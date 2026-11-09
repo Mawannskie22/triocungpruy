@@ -28,6 +28,7 @@ export function ReportForm() {
   const [duplicateTicket, setDuplicateTicket] = useState("");
   const [ticket, setTicket] = useState("");
   const [isLocating, setIsLocating] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function next() {
     const message =
@@ -86,7 +87,7 @@ export function ReportForm() {
     );
   }
 
-  function submit() {
+  async function submit() {
     const message = validateAddress(draft.address);
     if (message) {
       setError(message);
@@ -97,21 +98,47 @@ export function ReportForm() {
       setError("Pilih kategori laporan.");
       return;
     }
-    const result = saveReport({
-      description: draft.description.trim(),
-      category: draft.category,
-      address: draft.address.trim(),
-      coordinates: draft.coordinates,
-      photo: draft.photo,
-    });
-    if (!result.ok) {
-      setError(result.error);
-      setDuplicateTicket(result.existingTicket ?? "");
-      return;
+
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("/api/reports", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          description: draft.description.trim(),
+          category: draft.category,
+          address: draft.address.trim(),
+        }),
+      });
+      const data = (await response.json()) as { error?: string };
+
+      if (!response.ok) {
+        setError(data.error ?? "Laporan ditolak server. Coba lagi.");
+        setDuplicateTicket("");
+        return;
+      }
+
+      const result = saveReport({
+        description: draft.description.trim(),
+        category: draft.category,
+        address: draft.address.trim(),
+        coordinates: draft.coordinates,
+        photo: draft.photo,
+      });
+      if (!result.ok) {
+        setError(result.error);
+        setDuplicateTicket(result.existingTicket ?? "");
+        return;
+      }
+      setTicket(result.data.id);
+      setError("");
+      setDuplicateTicket("");
+    } catch {
+      setError("Gagal menghubungi server. Periksa koneksi lalu coba lagi.");
+      setDuplicateTicket("");
+    } finally {
+      setIsSubmitting(false);
     }
-    setTicket(result.data.id);
-    setError("");
-    setDuplicateTicket("");
   }
 
   if (ticket)
@@ -299,16 +326,12 @@ export function ReportForm() {
             type="button"
             className="button button-primary"
             onClick={step === 3 ? submit : next}
+            disabled={isSubmitting}
           >
-            {step === 3 ? "Kirim Laporan" : "Lanjutkan"} <span aria-hidden="true">↗</span>
+            {isSubmitting ? "Mengirim..." : step === 3 ? "Kirim Laporan" : "Lanjutkan"}{" "}
+            <span aria-hidden="true">↗</span>
           </button>
         </div>
-        {step === 3 && (
-          <p className="field-hint">
-            Pada demo ini, kiriman dibatasi satu per menit. Laporan dengan isi, kategori, dan alamat
-            yang sama dalam 24 jam akan diarahkan ke tiket sebelumnya.
-          </p>
-        )}
       </div>
       <p className="demo-note">
         Data simulasi untuk demo. Laporan disimpan di browser ini, bukan dikirim ke pemerintah.

@@ -3,7 +3,6 @@ import { createTicketId } from "@/lib/tickets";
 import { getNextStatus } from "@/data/report-status";
 
 const STORAGE_KEY = "lapor-balik-reports-v1";
-const RATE_LIMIT_MS = 60_000;
 const DUPLICATE_WINDOW_MS = 24 * 60 * 60 * 1000;
 
 type Result<T> = { ok: true; data: T } | { ok: false; error: string; existingTicket?: string };
@@ -77,10 +76,6 @@ export function saveReport(input: ReportDraft): Result<Report> {
       error: `Laporan yang sama sudah tersimpan dengan nomor ${duplicate.id}.`,
       existingTicket: duplicate.id,
     };
-  }
-  const latest = reports[0];
-  if (latest && now - new Date(latest.createdAt).getTime() < RATE_LIMIT_MS) {
-    return { ok: false, error: "Tunggu satu menit sebelum mengirim laporan berikutnya." };
   }
   const date = new Date(now);
   const randomCode = Math.random().toString(36).slice(2, 6).toUpperCase();
