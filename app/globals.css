@@ -216,9 +216,13 @@ h3 {
   overflow: hidden;
 }
 .hero-image {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+.hero-image img {
   object-fit: cover;
   object-position: center center;
-  z-index: -2;
 }
 .hero-shade {
   position: absolute;
@@ -992,7 +996,9 @@ input[type="text"],
     transform: translateX(-100%);
     opacity: 0;
     pointer-events: none;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+    transition:
+      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.3s ease;
   }
   .nav-links.is-open {
     transform: translateX(0);
@@ -1121,9 +1127,10 @@ input[type="text"],
   }
   .hero {
     min-height: 660px;
+    align-items: flex-start;
   }
   .hero-content {
-    padding-top: 130px;
+    padding-top: 145px;
     padding-bottom: 95px;
   }
   .hero-content h1 {
@@ -1344,7 +1351,7 @@ input[type="text"],
   color: #ffe0a0;
   background: #19130f;
 }
-.hero--daylight .hero-image {
+.hero--daylight .hero-image img {
   object-position: center;
 }
 .hero--daylight .hero-shade {

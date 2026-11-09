@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { cities } from "@/data/cities";
 
@@ -51,19 +51,36 @@ export function Hero() {
       }}
     >
       <div className="hero-slides">
-        {cities.map((city, index) => (
-          <Image
-            key={city.name}
-            className={`hero-image ${index === active ? `active ${slide.zoomIn ? "zoom-in" : "zoom-out"}` : index === slide.previous ? `is-exiting ${slide.zoomIn ? "exit-normal" : "exit-zoomed"}` : ""}`}
-            src={city.image}
-            alt={city.alt}
-            fill
-            priority={index === 0}
-            sizes="100vw"
-            quality={95}
-            aria-hidden={index !== active}
-          />
-        ))}
+        {cities.map((city, index) => {
+          const {
+            props: { srcSet: desktopSrcSet },
+          } = getImageProps({
+            src: city.image,
+            alt: city.alt,
+            fill: true,
+            sizes: "100vw",
+            quality: 85,
+          });
+
+          return (
+            <picture
+              key={city.name}
+              className={`hero-image ${index === active ? `active ${slide.zoomIn ? "zoom-in" : "zoom-out"}` : index === slide.previous ? `is-exiting ${slide.zoomIn ? "exit-normal" : "exit-zoomed"}` : ""}`}
+            >
+              <source media="(min-width: 701px)" srcSet={desktopSrcSet} sizes="100vw" />
+              <Image
+                src={city.mobileImage}
+                alt={city.alt}
+                fill
+                loading={index === 0 ? "eager" : "lazy"}
+                fetchPriority={index === 0 ? "high" : "auto"}
+                sizes="100vw"
+                quality={85}
+                aria-hidden={index !== active}
+              />
+            </picture>
+          );
+        })}
       </div>
       <div className="hero-shade" aria-hidden="true" />
       <div className="container hero-content">

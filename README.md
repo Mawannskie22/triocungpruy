@@ -42,7 +42,7 @@ Buka `http://localhost:3000`. Jika PowerShell memblokir `npm.ps1`, gunakan `npm.
 
 Laporan hanya tersimpan di `localStorage` browser. Data dapat hilang jika penyimpanan browser dibersihkan, tidak tersedia di perangkat lain, dan belum dikirim ke instansi. Panel petugas demo tidak memiliki login dan hanya mengubah data pada browser ini. Jeda serta pemeriksaan duplikat di browser dapat dilewati dengan membersihkan penyimpanan; sistem nyata memerlukan pembatasan di server dan autentikasi petugas. Peta pin belum tersedia; lokasi diisi manual atau memakai koordinat GPS perangkat.
 
-Hero memakai foto Bundaran HI yang sudah tersedia di proyek serta dua ilustrasi AI untuk Monas dan Kota Tua. Ilustrasi tersebut diberi label di tampilan.
+Hero memakai foto Bundaran HI yang sudah tersedia di proyek serta dua ilustrasi AI untuk Monas dan Kota Tua. Ketiganya memiliki versi potret hasil olahan AI untuk layar mobile agar landmark tidak terpotong. Ilustrasi tersebut diberi label di tampilan.
 
 ## Struktur utama
 
