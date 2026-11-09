@@ -31,6 +31,10 @@ export function readReports(): Report[] {
   }
 }
 
+export function setReports(reports: Report[]): boolean {
+  return writeReports(reports);
+}
+
 function isReport(value: unknown): value is Report {
   if (!value || typeof value !== "object") return false;
   const report = value as Partial<Report>;
