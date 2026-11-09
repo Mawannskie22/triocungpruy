@@ -1,11 +1,20 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { getCategoryLabel } from "@/data/categories";
-import { advanceDemoStatus, confirmReport, findReport } from "@/lib/reports";
+import { getStatusLabel, reportStages } from "@/data/report-status";
+import { confirmReport, findReport } from "@/lib/reports";
 import type { Report } from "@/types/report";
+
+function formatTime(value: string): string {
+  const date = new Date(value);
+  return Number.isNaN(date.getTime())
+    ? "Waktu tidak tercatat"
+    : date.toLocaleString("id-ID", { dateStyle: "medium", timeStyle: "short" });
+}
 
 function Lookup() {
   const searchParams = useSearchParams();
@@ -24,13 +33,6 @@ function Lookup() {
     );
   }
 
-  function advance() {
-    if (!report) return;
-    const result = advanceDemoStatus(report.id);
-    if (result.ok) setReport(result.data);
-    else setError(result.error);
-  }
-
   function confirm() {
     if (!report) return;
     const result = confirmReport(report.id);
@@ -38,7 +40,10 @@ function Lookup() {
     else setError(result.error);
   }
 
-  const stages = ["diterima", "diproses", "selesai"] as const;
+  const stages = report?.history?.length
+    ? reportStages
+    : reportStages.filter((stage) => stage.id !== "diverifikasi");
+  const currentStage = reportStages.findIndex((stage) => stage.id === report?.status);
   return (
     <div className="container status-shell">
       <div className="lookup-panel">
@@ -75,7 +80,9 @@ function Lookup() {
               <span className="eyebrow">DATA SIMULASI</span>
               <h2>{report.id}</h2>
             </div>
-            <span className={`status-badge status-${report.status}`}>{report.status}</span>
+            <span className={`status-badge status-${report.status}`}>
+              {getStatusLabel(report.status)}
+            </span>
           </div>
           <div className="report-details">
             <div>
@@ -84,12 +91,7 @@ function Lookup() {
             </div>
             <div>
               <span>Dibuat</span>
-              <strong>
-                {new Date(report.createdAt).toLocaleString("id-ID", {
-                  dateStyle: "medium",
-                  timeStyle: "short",
-                })}
-              </strong>
+              <strong>{formatTime(report.createdAt)}</strong>
             </div>
             <div>
               <span>Lokasi</span>
@@ -102,34 +104,49 @@ function Lookup() {
           </div>
           <h3>Perkembangan laporan</h3>
           <ol className="timeline">
-            {stages.map((stage, index) => (
-              <li key={stage} className={stages.indexOf(report.status) >= index ? "done" : ""}>
-                <span className="timeline-dot" />
-                <div>
-                  <strong>
-                    {stage === "diterima"
-                      ? "Laporan diterima"
-                      : stage === "diproses"
-                        ? "Sedang diproses"
-                        : "Selesai"}
-                  </strong>
-                  <p>
-                    {stage === "diterima"
-                      ? "Laporan tersimpan di browser ini."
-                      : stage === "diproses"
-                        ? "Tahap tindak lanjut dalam simulasi."
-                        : "Tahap selesai dalam simulasi."}
-                  </p>
-                </div>
-              </li>
-            ))}
+            {stages.map((stage) => {
+              const event = report.history?.find((item) => item.status === stage.id);
+              const done = reportStages.findIndex((item) => item.id === stage.id) <= currentStage;
+              return (
+                <li key={stage.id} className={done ? "done" : ""}>
+                  <span className="timeline-dot" />
+                  <div>
+                    <strong>{stage.label}</strong>
+                    <p>
+                      {event
+                        ? event.note
+                        : done
+                          ? "Catatan perubahan belum tersedia pada laporan lama."
+                          : stage.description}
+                    </p>
+                    {event && (
+                      <small className="timeline-time">
+                        {formatTime(event.at)} ·{" "}
+                        {event.actor === "warga" ? "Warga" : "Petugas demo"}
+                      </small>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
           </ol>
+          {report.status === "selesai" && (
+            <div className="resolution-evidence">
+              <h3>Bukti penyelesaian</h3>
+              {report.resolutionPhoto ? (
+                <Image
+                  src={report.resolutionPhoto}
+                  alt="Foto bukti penyelesaian yang diunggah petugas demo"
+                  width={800}
+                  height={500}
+                  unoptimized
+                />
+              ) : (
+                <p>Foto bukti belum dilampirkan.</p>
+              )}
+            </div>
+          )}
           <div className="result-actions">
-            {report.status !== "selesai" && (
-              <button type="button" className="button button-primary" onClick={advance}>
-                Simulasikan tahap berikutnya →
-              </button>
-            )}
             {report.status === "selesai" && !report.confirmed && (
               <button type="button" className="button button-primary" onClick={confirm}>
                 Konfirmasi sudah beres ✓
@@ -140,8 +157,8 @@ function Lookup() {
             )}
           </div>
           <p className="demo-note">
-            Perubahan status di atas adalah simulasi yang kamu jalankan sendiri, bukan tindak lanjut
-            dari instansi.
+            Pembaruan di atas berasal dari panel petugas demo dalam browser ini dan belum terhubung
+            ke instansi.
           </p>
         </article>
       )}

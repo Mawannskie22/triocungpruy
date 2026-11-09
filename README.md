@@ -26,24 +26,27 @@ Buka `http://localhost:3000`. Jika PowerShell memblokir `npm.ps1`, gunakan `npm.
 
 - **Landing page (`/`)** sudah menampilkan penjelasan layanan, cara melapor, dan tautan menuju form serta halaman cek status.
 - **Buat laporan (`/lapor`)** sudah berjalan dalam tiga langkah: deskripsi, kategori, dan lokasi. Foto maksimal 1 MB dan akses GPS bersifat opsional. Setelah berhasil, warga mendapat nomor tiket.
-- **Cek status (`/status`)** sudah dapat mencari tiket dan menampilkan detail laporan. Perubahan tahap `diterima` → `diproses` → `selesai` serta konfirmasi warga masih berupa simulasi.
-- **Sitemap warga dan rencana dashboard petugas** sudah didokumentasikan di [docs/sitemap.md](docs/sitemap.md). Area petugas belum diimplementasikan.
+- **Cek status (`/status`)** menampilkan empat tahap, catatan dan waktu tindak lanjut baru, serta foto bukti bila dilampirkan. Warga dapat memberi konfirmasi setelah tahap selesai.
+- **Panel petugas demo (`/petugas/demo`)** menampilkan laporan dari browser yang sama. Petugas simulasi dapat menambahkan catatan, memajukan tahap `diterima` → `diverifikasi` → `diproses` → `selesai`, dan melampirkan foto bukti penyelesaian.
+- **Pencegahan kiriman berulang** membatasi satu laporan per menit dan menolak laporan dengan kategori, alamat, serta deskripsi identik dalam 24 jam pada browser yang sama.
+- **Sitemap warga, panel demo, dan rencana dashboard petugas** didokumentasikan di [docs/sitemap.md](docs/sitemap.md).
 
 ## Alur demo
 
 1. Buka `/lapor`, isi deskripsi, kategori, dan alamat. Foto dan GPS boleh dilewati.
 2. Simpan nomor tiket `LB-YYMMDD-XXXX` setelah laporan dibuat.
-3. Buka `/status` pada browser yang sama, cari tiket, lalu coba simulasi perubahan status dan konfirmasi warga.
+3. Buka `/petugas/demo` pada browser yang sama, pilih laporan, isi catatan, lalu majukan status sampai selesai. Foto bukti penyelesaian bersifat opsional.
+4. Kembali ke `/status`, cari tiket, lihat riwayat dan bukti, lalu beri konfirmasi warga.
 
 ## Batasan prototipe
 
-Laporan hanya tersimpan di `localStorage` browser. Data dapat hilang jika penyimpanan browser dibersihkan, tidak tersedia di perangkat lain, dan belum dikirim ke instansi. Peta pin belum tersedia; lokasi diisi manual atau memakai koordinat GPS perangkat.
+Laporan hanya tersimpan di `localStorage` browser. Data dapat hilang jika penyimpanan browser dibersihkan, tidak tersedia di perangkat lain, dan belum dikirim ke instansi. Panel petugas demo tidak memiliki login dan hanya mengubah data pada browser ini. Jeda serta pemeriksaan duplikat di browser dapat dilewati dengan membersihkan penyimpanan; sistem nyata memerlukan pembatasan di server dan autentikasi petugas. Peta pin belum tersedia; lokasi diisi manual atau memakai koordinat GPS perangkat.
 
 Hero memakai foto Bundaran HI yang sudah tersedia di proyek serta dua ilustrasi AI untuk Monas dan Kota Tua. Ilustrasi tersebut diberi label di tampilan.
 
 ## Struktur utama
 
-- `app/`: landing page serta route `/lapor` dan `/status`.
+- `app/`: landing page serta route `/lapor`, `/status`, dan `/petugas/demo`.
 - `components/`: bagian antarmuka dan interaksi.
 - `data/`: daftar kategori laporan.
 - `lib/`: pembuatan tiket, validasi, dan penyimpanan laporan.

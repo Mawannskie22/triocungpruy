@@ -25,6 +25,7 @@ export function ReportForm() {
   const [step, setStep] = useState(1);
   const [draft, setDraft] = useState<Draft>(initialDraft);
   const [error, setError] = useState("");
+  const [duplicateTicket, setDuplicateTicket] = useState("");
   const [ticket, setTicket] = useState("");
   const [isLocating, setIsLocating] = useState(false);
 
@@ -105,10 +106,12 @@ export function ReportForm() {
     });
     if (!result.ok) {
       setError(result.error);
+      setDuplicateTicket(result.existingTicket ?? "");
       return;
     }
     setTicket(result.data.id);
     setError("");
+    setDuplicateTicket("");
   }
 
   if (ticket)
@@ -160,6 +163,14 @@ export function ReportForm() {
             <strong>{label}</strong>
           </div>
         ))}
+      </div>
+      <div className="mobile-progress" aria-label={`Langkah ${step} dari 3`}>
+        <span>
+          Langkah {step} dari 3: {["Ceritakan", "Kategori", "Lokasi"][step - 1]}
+        </span>
+        <div className="mobile-progress-track" aria-hidden="true">
+          <span style={{ width: `${(step / 3) * 100}%` }} />
+        </div>
       </div>
       <div className="form-panel">
         {step === 1 && (
@@ -261,6 +272,14 @@ export function ReportForm() {
         {error && (
           <p className="form-error" role="alert">
             {error}
+            {duplicateTicket && (
+              <>
+                {" "}
+                <Link href={`/status?ticket=${encodeURIComponent(duplicateTicket)}`}>
+                  Lihat laporan tersebut.
+                </Link>
+              </>
+            )}
           </p>
         )}
         <div className="form-actions">
@@ -284,6 +303,12 @@ export function ReportForm() {
             {step === 3 ? "Kirim Laporan" : "Lanjutkan"} <span aria-hidden="true">↗</span>
           </button>
         </div>
+        {step === 3 && (
+          <p className="field-hint">
+            Pada demo ini, kiriman dibatasi satu per menit. Laporan dengan isi, kategori, dan alamat
+            yang sama dalam 24 jam akan diarahkan ke tiket sebelumnya.
+          </p>
+        )}
       </div>
       <p className="demo-note">
         Data simulasi untuk demo. Laporan disimpan di browser ini, bukan dikirim ke pemerintah.
