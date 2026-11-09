@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import {
   Area,
@@ -69,11 +70,11 @@ export function Dashboard() {
       </div>
 
       <div className="officer-kpis">
-        <article className="officer-kpi">
+        <Link href="/petugas/dashboard/tiket" className="officer-kpi officer-kpi-link">
           <span>Total laporan</span>
           <strong>{stats.total}</strong>
-          <small>Semua laporan di browser ini</small>
-        </article>
+          <small>Semua laporan di browser ini · Lihat tiket →</small>
+        </Link>
         <article className="officer-kpi">
           <span>Masuk hari ini</span>
           <strong>{stats.today}</strong>
