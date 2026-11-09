@@ -13,6 +13,7 @@ type Filter = "semua" | ReportStatus;
 
 const MAX_EVIDENCE_SIZE = 1_000_000;
 const EVIDENCE_TYPES = ["image/jpeg", "image/png", "image/webp"];
+const PAGE_SIZE = 10;
 
 function formatTime(value: string): string {
   const date = new Date(value);
@@ -30,6 +31,7 @@ export function TicketWorkspace() {
   const [loaded, setLoaded] = useState(false);
   const [filter, setFilter] = useState<Filter>("semua");
   const [query, setQuery] = useState("");
+  const [page, setPage] = useState(1);
   const [selectedId, setSelectedId] = useState("");
   const [mobileDetailOpen, setMobileDetailOpen] = useState(false);
   const [note, setNote] = useState("");
@@ -77,15 +79,32 @@ export function TicketWorkspace() {
     });
   }, [reports, filter, query]);
 
+  const pageCount = Math.max(1, Math.ceil(visibleReports.length / PAGE_SIZE));
+  const currentPage = Math.min(page, pageCount);
+  const pagedReports = useMemo(
+    () => visibleReports.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE),
+    [visibleReports, currentPage],
+  );
+  const rangeStart = visibleReports.length === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
+  const rangeEnd = Math.min(currentPage * PAGE_SIZE, visibleReports.length);
+
   useEffect(() => {
-    if (visibleReports.length === 0) {
+    setPage(1);
+  }, [filter, query]);
+
+  useEffect(() => {
+    if (page > pageCount) setPage(pageCount);
+  }, [page, pageCount]);
+
+  useEffect(() => {
+    if (pagedReports.length === 0) {
       setSelectedId("");
       return;
     }
-    if (!visibleReports.some((report) => report.id === selectedId)) {
-      setSelectedId(visibleReports[0].id);
+    if (!pagedReports.some((report) => report.id === selectedId)) {
+      setSelectedId(pagedReports[0].id);
     }
-  }, [visibleReports, selectedId]);
+  }, [pagedReports, selectedId]);
 
   const selected = reports.find((report) => report.id === selectedId);
   const nextStatus = selected ? getNextStatus(selected.status) : null;
@@ -189,7 +208,7 @@ export function TicketWorkspace() {
         <div className="officer-queue">
           <div className="officer-section-title">
             <h2>Daftar laporan</h2>
-            <span>{visibleReports.length} ditampilkan</span>
+            <span>{visibleReports.length} laporan</span>
           </div>
           {!loaded ? (
             <p className="officer-empty">Memuat laporan dari browser...</p>
@@ -204,26 +223,62 @@ export function TicketWorkspace() {
               {reports.length === 0 && <Link href="/lapor">Buat laporan uji ↗</Link>}
             </div>
           ) : (
-            <ul className="officer-report-list">
-              {visibleReports.map((report) => (
-                <li key={report.id}>
+            <>
+              <ul className="officer-report-list">
+                {pagedReports.map((report) => (
+                  <li key={report.id}>
+                    <button
+                      type="button"
+                      className={`officer-report-row ${selectedId === report.id ? "selected" : ""}`}
+                      onClick={() => selectReport(report.id)}
+                      aria-pressed={selectedId === report.id}
+                    >
+                      <span className="officer-report-main">
+                        <strong>{report.id}</strong>
+                        <span>
+                          {getCategoryLabel(report.category)} · {report.address}
+                        </span>
+                      </span>
+                      <span className="officer-report-status">{getStatusLabel(report.status)}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              <div className="officer-pagination">
+                <span>
+                  Menampilkan {rangeStart}–{rangeEnd} dari {visibleReports.length}
+                </span>
+                <div className="officer-pagination-controls">
                   <button
                     type="button"
-                    className={`officer-report-row ${selectedId === report.id ? "selected" : ""}`}
-                    onClick={() => selectReport(report.id)}
-                    aria-pressed={selectedId === report.id}
+                    onClick={() => setPage(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    aria-label="Halaman sebelumnya"
                   >
-                    <span className="officer-report-main">
-                      <strong>{report.id}</strong>
-                      <span>
-                        {getCategoryLabel(report.category)} · {report.address}
-                      </span>
-                    </span>
-                    <span className="officer-report-status">{getStatusLabel(report.status)}</span>
+                    ←
                   </button>
-                </li>
-              ))}
-            </ul>
+                  {Array.from({ length: pageCount }, (_, index) => index + 1).map((number) => (
+                    <button
+                      key={number}
+                      type="button"
+                      className={number === currentPage ? "active" : ""}
+                      aria-current={number === currentPage ? "page" : undefined}
+                      onClick={() => setPage(number)}
+                    >
+                      {number}
+                    </button>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() => setPage(currentPage + 1)}
+                    disabled={currentPage === pageCount}
+                    aria-label="Halaman berikutnya"
+                  >
+                    →
+                  </button>
+                </div>
+              </div>
+            </>
           )}
         </div>
 

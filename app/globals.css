@@ -2824,9 +2824,43 @@ input[type="text"],
 .officer-filter-bar button.active span {
   background: rgba(255, 255, 255, 0.18);
 }
-.officer-queue .officer-report-list {
-  max-height: 640px;
-  overflow-y: auto;
+.officer-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+.officer-pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.officer-pagination-controls button {
+  min-width: 30px;
+  min-height: 30px;
+  padding: 4px 8px;
+  border: 1px solid #e0dbcd;
+  border-radius: 4px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+.officer-pagination-controls button:hover:not(:disabled) {
+  background: #f9f7ef;
+}
+.officer-pagination-controls button.active {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
+}
+.officer-pagination-controls button:disabled {
+  opacity: 0.4;
+  cursor: default;
 }
 .officer-update label span {
   color: var(--red);
