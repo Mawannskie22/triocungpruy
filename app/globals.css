@@ -2597,6 +2597,23 @@ input[type="text"],
   font-size: 0.78rem;
   font-weight: 700;
 }
+.officer-kpi-link {
+  color: inherit;
+  text-decoration: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+}
+.officer-kpi-link:hover {
+  border-color: #d6c9a4;
+  box-shadow: 0 10px 24px rgba(26, 26, 26, 0.08);
+  transform: translateY(-1px);
+}
+.officer-kpi-link:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
 .officer-kpi strong {
   font-size: 2rem;
   line-height: 1.1;
