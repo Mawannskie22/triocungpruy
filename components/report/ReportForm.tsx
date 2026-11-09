@@ -21,6 +21,10 @@ type Draft = {
 };
 const initialDraft: Draft = { description: "", category: "", address: "" };
 
+function isCoordinateText(value: string): boolean {
+  return /^-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?$/.test(value.trim());
+}
+
 export function ReportForm() {
   const [step, setStep] = useState(1);
   const [draft, setDraft] = useState<Draft>(initialDraft);
@@ -83,17 +87,45 @@ export function ReportForm() {
       setError("GPS tidak tersedia. Isi alamat secara manual.");
       return;
     }
+
+    const typedAddress = draft.address.trim();
+    const shouldFillAddress = !typedAddress || isCoordinateText(typedAddress);
+
     setIsLocating(true);
     navigator.geolocation.getCurrentPosition(
-      ({ coords }) => {
+      async ({ coords }) => {
+        const fallback = `${coords.latitude.toFixed(5)}, ${coords.longitude.toFixed(5)}`;
         setDraft((current) => ({
           ...current,
           coordinates: { latitude: coords.latitude, longitude: coords.longitude },
-          address:
-            current.address || `${coords.latitude.toFixed(5)}, ${coords.longitude.toFixed(5)}`,
+          address: shouldFillAddress ? fallback : current.address,
         }));
-        setIsLocating(false);
         setError("");
+
+        if (!shouldFillAddress) {
+          setIsLocating(false);
+          return;
+        }
+
+        try {
+          const params = new URLSearchParams({
+            lat: String(coords.latitude),
+            lng: String(coords.longitude),
+          });
+          const response = await fetch(`/api/reverse-geocode?${params.toString()}`);
+          const data = (await response.json()) as { address?: string };
+
+          if (!response.ok || !data.address) {
+            setError("Alamat otomatis tidak ditemukan. Isi alamat secara manual.");
+            return;
+          }
+
+          setDraft((current) => ({ ...current, address: data.address as string }));
+        } catch {
+          setError("Alamat otomatis tidak ditemukan. Isi alamat secara manual.");
+        } finally {
+          setIsLocating(false);
+        }
       },
       () => {
         setIsLocating(false);
