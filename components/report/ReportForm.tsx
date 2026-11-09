@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { categories } from "@/data/categories";
+import { categories, getCategoryLabel } from "@/data/categories";
 import { saveReport } from "@/lib/reports";
 import {
   validateAddress,
@@ -31,12 +31,28 @@ export function ReportForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   function next() {
-    const message =
-      step === 1 ? validateDescription(draft.description) : validateCategory(draft.category);
-    if (message) {
-      setError(message);
-      return;
+    if (step === 1) {
+      const message = validateCategory(draft.category);
+      if (message) {
+        setError(message);
+        return;
+      }
     }
+
+    if (step === 2) {
+      if (draft.category === "lainnya") {
+        const message = validateDescription(draft.description);
+        if (message) {
+          setError(message);
+          return;
+        }
+      }
+      if (!draft.photo) {
+        setError("Foto tempat kejadian wajib diunggah. Pilih foto terlebih dahulu.");
+        return;
+      }
+    }
+
     setError("");
     setStep(step + 1);
   }
@@ -94,10 +110,15 @@ export function ReportForm() {
       return;
     }
     if (!draft.category) {
-      setStep(2);
+      setStep(1);
       setError("Pilih kategori laporan.");
       return;
     }
+
+    const description =
+      draft.category === "lainnya"
+        ? draft.description.trim()
+        : `Laporan warga: ${getCategoryLabel(draft.category)}`;
 
     setIsSubmitting(true);
     try {
@@ -105,7 +126,7 @@ export function ReportForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          description: draft.description.trim(),
+          description,
           category: draft.category,
           address: draft.address.trim(),
         }),
@@ -119,7 +140,7 @@ export function ReportForm() {
       }
 
       const result = saveReport({
-        description: draft.description.trim(),
+        description,
         category: draft.category,
         address: draft.address.trim(),
         coordinates: draft.coordinates,
@@ -184,7 +205,7 @@ export function ReportForm() {
   return (
     <div className="container form-shell">
       <div className="progress-list" aria-label={`Langkah ${step} dari 3`}>
-        {["Ceritakan", "Kategori", "Lokasi"].map((label, index) => (
+        {["Kategori", "Foto", "Lokasi"].map((label, index) => (
           <div key={label} className={`progress-item ${step >= index + 1 ? "active" : ""}`}>
             <span>{String(index + 1).padStart(2, "0")}</span>
             <strong>{label}</strong>
@@ -193,7 +214,7 @@ export function ReportForm() {
       </div>
       <div className="mobile-progress" aria-label={`Langkah ${step} dari 3`}>
         <span>
-          Langkah {step} dari 3: {["Ceritakan", "Kategori", "Lokasi"][step - 1]}
+          Langkah {step} dari 3: {["Kategori", "Foto", "Lokasi"][step - 1]}
         </span>
         <div className="mobile-progress-track" aria-hidden="true">
           <span style={{ width: `${(step / 3) * 100}%` }} />
@@ -203,39 +224,6 @@ export function ReportForm() {
         {step === 1 && (
           <div>
             <span className="eyebrow">LANGKAH 01 / 03</span>
-            <h2>Apa yang terjadi?</h2>
-            <p>Beri cerita yang cukup supaya masalahnya mudah dipahami.</p>
-            <label className="field-label" htmlFor="description">
-              Ceritakan masalah <span>*</span>
-            </label>
-            <textarea
-              id="description"
-              rows={6}
-              maxLength={MAX_DESCRIPTION_LENGTH}
-              value={draft.description}
-              onChange={(event) => setDraft({ ...draft, description: event.target.value })}
-              placeholder="Contoh: Lampu jalan di depan halte sudah mati tiga malam..."
-            />
-            <div className="field-hint">
-              {draft.description.length}/{MAX_DESCRIPTION_LENGTH} karakter · minimal 10 karakter
-            </div>
-            <label className="field-label" htmlFor="photo">
-              Foto pendukung <small>(opsional)</small>
-            </label>
-            <input
-              id="photo"
-              type="file"
-              accept="image/*"
-              onChange={(event) => choosePhoto(event.target.files?.[0])}
-            />
-            <div className="field-hint">
-              JPG, PNG, atau gambar lain, maksimal 1 MB. {draft.photo ? "Foto siap disimpan." : ""}
-            </div>
-          </div>
-        )}
-        {step === 2 && (
-          <div>
-            <span className="eyebrow">LANGKAH 02 / 03</span>
             <h2>Masuk kategori apa?</h2>
             <p>Pilih yang paling mendekati. Kalau tidak ada, pilih Lainnya.</p>
             <div className="category-grid">
@@ -254,6 +242,43 @@ export function ReportForm() {
                   <strong>{category.label}</strong>
                 </button>
               ))}
+            </div>
+          </div>
+        )}
+        {step === 2 && (
+          <div>
+            <span className="eyebrow">LANGKAH 02 / 03</span>
+            <h2>Tambahkan bukti.</h2>
+            <p>Foto membantu petugas melihat kondisi sebenarnya.</p>
+            {draft.category === "lainnya" && (
+              <>
+                <label className="field-label" htmlFor="description">
+                  Ceritakan masalah <span>*</span>
+                </label>
+                <textarea
+                  id="description"
+                  rows={6}
+                  maxLength={MAX_DESCRIPTION_LENGTH}
+                  value={draft.description}
+                  onChange={(event) => setDraft({ ...draft, description: event.target.value })}
+                  placeholder="Contoh: Lampu jalan di depan halte sudah mati tiga malam..."
+                />
+                <div className="field-hint">
+                  {draft.description.length}/{MAX_DESCRIPTION_LENGTH} karakter · minimal 10 karakter
+                </div>
+              </>
+            )}
+            <label className="field-label" htmlFor="photo">
+              Foto Tempat Kejadian <span>*</span>
+            </label>
+            <input
+              id="photo"
+              type="file"
+              accept="image/*"
+              onChange={(event) => choosePhoto(event.target.files?.[0])}
+            />
+            <div className="field-hint">
+              JPG, PNG, atau gambar lain, maksimal 1 MB. {draft.photo ? "Foto siap disimpan." : ""}
             </div>
           </div>
         )}
