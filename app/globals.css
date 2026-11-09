@@ -1955,7 +1955,7 @@ input[type="text"],
 }
 .officer-frame {
   display: grid;
-  grid-template-columns: 2fr minmax(0, 10fr);
+  grid-template-columns: clamp(200px, 16.666%, 320px) minmax(0, 1fr);
   width: 100%;
   min-height: 100vh;
   margin: 0;
