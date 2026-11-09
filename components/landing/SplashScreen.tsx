@@ -6,8 +6,8 @@ import { MapGlyph } from "@/components/map/map-icons";
 import type { ReportCategory } from "@/types/report";
 
 const SESSION_KEY = "lapor-balik-splash-seen-v1";
-const DRIVE_DURATION = 8500;
-const ARRIVAL_HOLD = 1100;
+const DRIVE_DURATION = 2600;
+const ARRIVAL_HOLD = 500;
 const EXIT_DURATION = 600;
 
 const roadsideSigns: { category: ReportCategory; label: string; side: "left" | "right" }[] = [
@@ -149,7 +149,7 @@ export function SplashScreen() {
           <div
             className={`splash-sign splash-sign--${sign.side}`}
             key={sign.category}
-            style={{ animationDelay: `${0.6 + index * 1.65}s` }}
+            style={{ animationDelay: `${0.15 + index * 0.45}s` }}
           >
             <div className="splash-sign-face">
               <MapGlyph category={sign.category} />
