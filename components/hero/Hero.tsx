@@ -71,8 +71,7 @@ export function Hero() {
           <span className="kicker-dot" /> PLATFORM ASPIRASI WARGA JAKARTA
         </span>
         <h1 id="hero-title">
-          Kotamu punya cerita.
-          <br />
+          <span className="hero-title-line">Kotamu punya cerita.</span>
           <em>Suaramu punya arti.</em>
         </h1>
         <p>
@@ -87,7 +86,6 @@ export function Hero() {
             Cek Status Laporan
           </Link>
         </div>
-        <span className="hero-note">✳ Tanpa login untuk melapor</span>
       </div>
       <div className="hero-city-control">
         <div className="hero-caption">
