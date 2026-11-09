@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { ReportMapCanvas } from "@/components/map/ReportMapCanvas";
 import { categories, getCategoryLabel } from "@/data/categories";
 import { saveReport } from "@/lib/reports";
 import {
@@ -338,6 +339,20 @@ export function ReportForm() {
             >
               {isLocating ? "Mengambil lokasi..." : "◎ Gunakan lokasi perangkat"}
             </button>
+            <div className="report-pin-picker">
+              <strong>
+                Tandai titik di peta <span>(opsional)</span>
+              </strong>
+              <p>
+                Ketuk lokasi kejadian agar laporanmu bisa terlihat pada peta landing page. Alamat
+                tetap perlu diisi.
+              </p>
+              <ReportMapCanvas
+                mode="pick"
+                point={draft.coordinates}
+                onPick={(coordinates) => setDraft((current) => ({ ...current, coordinates }))}
+              />
+            </div>
             {draft.coordinates && (
               <p className="field-hint">
                 Koordinat tercatat: {draft.coordinates.latitude.toFixed(5)},{" "}

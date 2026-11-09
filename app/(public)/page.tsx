@@ -1,4 +1,5 @@
 import { Hero } from "@/components/hero/Hero";
+import { ReportMapSection } from "@/components/landing/ReportMapSection";
 import { WhyCards } from "@/components/landing/WhyCards";
 import { GoalsList } from "@/components/landing/GoalsList";
 import { ServiceCards } from "@/components/landing/ServiceCards";
@@ -10,6 +11,7 @@ export default function Home() {
   return (
     <main>
       <Hero />
+      <ReportMapSection />
       <WhyCards />
       <GoalsList />
       <ServiceCards />

@@ -34,6 +34,27 @@ const ADDRESSES = [
   "Jl. Pramuka, Jakarta Pusat",
 ];
 
+const DEMO_POINTS: Record<string, [number, number]> = {
+  "Jl. Sudirman dekat halte, Jakarta Pusat": [-6.2074, 106.8214],
+  "Jl. Thamrin depan gedung, Jakarta Pusat": [-6.1944, 106.8231],
+  "Jl. Kemang Raya, Jakarta Selatan": [-6.2631, 106.8146],
+  "Jl. Fatmawati dekat pasar, Jakarta Selatan": [-6.2924, 106.7938],
+  "Jl. Tebet Barat Dalam, Jakarta Selatan": [-6.2301, 106.8491],
+  "Jl. Casablanca, Jakarta Selatan": [-6.2221, 106.8413],
+  "Jl. Gajah Mada, Jakarta Barat": [-6.1592, 106.8177],
+  "Jl. Tanjung Duren Raya, Jakarta Barat": [-6.1781, 106.7875],
+  "Jl. Daan Mogot, Jakarta Barat": [-6.1541, 106.7783],
+  "Jl. Pemuda, Jakarta Timur": [-6.1926, 106.8904],
+  "Jl. Matraman Raya, Jakarta Timur": [-6.2031, 106.8571],
+  "Jl. Kalimalang, Jakarta Timur": [-6.2468, 106.9028],
+  "Jl. Yos Sudarso, Jakarta Utara": [-6.1394, 106.8788],
+  "Jl. Pluit Raya, Jakarta Utara": [-6.1194, 106.7978],
+  "Jl. Kelapa Gading Boulevard, Jakarta Utara": [-6.1589, 106.9051],
+  "Jl. Pramuka, Jakarta Pusat": [-6.1921, 106.8592],
+};
+
+const MAP_SEED_KEY = "lapor-balik-map-seeded-v1";
+
 const DESCRIPTIONS: Record<ReportCategory, string[]> = {
   "jalan-rusak": [
     "Aspal berlubang cukup dalam di lajur kiri dan membahayakan pengendara motor.",
@@ -160,11 +181,19 @@ export function createDemoReports(): Report[] {
     }
     usedIds.add(id);
 
+    const description = pick(DESCRIPTIONS[category], random);
+    const address = pick(ADDRESSES, random);
+    const [latitude, longitude] = DEMO_POINTS[address];
+
     reports.push({
       id,
-      description: pick(DESCRIPTIONS[category], random),
+      description,
       category,
-      address: pick(ADDRESSES, random),
+      address,
+      coordinates: {
+        latitude: latitude + ((index % 5) - 2) * 0.00055,
+        longitude: longitude + ((Math.floor(index / 5) % 5) - 2) * 0.00055,
+      },
       status,
       createdAt: createdAt.toISOString(),
       history,
@@ -198,4 +227,34 @@ export function resetDemoReports(): Report[] {
   const seeded = createDemoReports();
   setReports(seeded);
   return seeded;
+}
+
+export function ensureMapDemoReports(): { reports: Report[]; storageAvailable: boolean } {
+  const existing = readReports();
+  try {
+    if (localStorage.getItem(MAP_SEED_KEY) === "1") {
+      return { reports: existing, storageAvailable: true };
+    }
+  } catch {
+    return { reports: existing, storageAvailable: false };
+  }
+
+  const demo = createDemoReports();
+  const demoById = new Map(demo.map((report) => [report.id, report]));
+  const preserved = existing.map((report) =>
+    !report.coordinates && demoById.has(report.id)
+      ? { ...report, coordinates: demoById.get(report.id)?.coordinates }
+      : report,
+  );
+  const ids = new Set(preserved.map((report) => report.id));
+  const merged = [...preserved, ...demo.filter((report) => !ids.has(report.id))].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  );
+  if (!setReports(merged)) return { reports: existing, storageAvailable: false };
+  try {
+    localStorage.setItem(MAP_SEED_KEY, "1");
+  } catch {
+    // The reports have already been saved; a later visit can safely retry deduplication.
+  }
+  return { reports: merged, storageAvailable: true };
 }
