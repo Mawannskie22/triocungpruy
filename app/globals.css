@@ -1950,14 +1950,15 @@ input[type="text"],
   border: 1px solid var(--line);
 }
 .officer-page {
-  padding: 28px 18px 70px;
+  padding: 0;
   background: #f2f0e9;
 }
 .officer-frame {
   display: grid;
-  grid-template-columns: 222px minmax(0, 1fr);
-  width: min(100%, 1450px);
-  margin: 0 auto;
+  grid-template-columns: 2fr minmax(0, 10fr);
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
   background: #f2f0e9;
 }
 .officer-sidebar {
