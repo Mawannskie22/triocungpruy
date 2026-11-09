@@ -6,8 +6,8 @@ import type { ReactNode } from "react";
 import { signOut, type OfficerSession } from "@/lib/officer-auth";
 
 const NAV = [
-  { href: "/petugas/demo", label: "Dashboard" },
-  { href: "/petugas/demo/tiket", label: "Tiket" },
+  { href: "/petugas/dashboard", label: "Dashboard" },
+  { href: "/petugas/dashboard/tiket", label: "Tiket" },
 ];
 
 export function OfficerShell({
@@ -21,7 +21,7 @@ export function OfficerShell({
   const router = useRouter();
 
   function isActive(href: string) {
-    return href === "/petugas/demo" ? pathname === href : pathname.startsWith(href);
+    return href === "/petugas/dashboard" ? pathname === href : pathname.startsWith(href);
   }
 
   function logout() {

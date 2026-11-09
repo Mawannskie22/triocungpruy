@@ -1950,7 +1950,7 @@ input[type="text"],
   border: 1px solid var(--line);
 }
 .officer-page {
-  padding: 96px 18px 70px;
+  padding: 28px 18px 70px;
   background: #f2f0e9;
 }
 .officer-frame {
@@ -2284,7 +2284,7 @@ input[type="text"],
 }
 @media (max-width: 700px) {
   .officer-page {
-    padding: 76px 0 28px;
+    padding: 20px 0 28px;
     background: #fff;
   }
   .officer-sheet {

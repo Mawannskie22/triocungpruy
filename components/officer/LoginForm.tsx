@@ -14,7 +14,7 @@ export function LoginForm() {
 
   useEffect(() => {
     if (getSession()) {
-      router.replace("/petugas/demo");
+      router.replace("/petugas/dashboard");
       return;
     }
     setChecking(false);
@@ -27,7 +27,7 @@ export function LoginForm() {
       setError("Email atau password salah. Coba lagi.");
       return;
     }
-    router.replace("/petugas/demo");
+    router.replace("/petugas/dashboard");
   }
 
   if (checking) {
