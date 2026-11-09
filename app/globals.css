@@ -2654,16 +2654,14 @@ input[type="text"],
   background: #0a1322;
   color: #fff0ce;
   opacity: 1;
-  transition:
-    opacity 0.6s ease,
-    visibility 0.6s ease;
+  will-change: transform;
+  transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1);
 }
 html[data-splash-seen="1"] .splash-screen {
   display: none;
 }
 .splash-screen--leaving {
-  opacity: 0;
-  visibility: hidden;
+  transform: translateY(-100%);
   pointer-events: none;
 }
 .splash-scene {
@@ -2671,7 +2669,7 @@ html[data-splash-seen="1"] .splash-screen {
   inset: 0;
   overflow: hidden;
   background: url("/images/splash/jakarta-road-desktop.webp") center 51% / cover no-repeat;
-  animation: splash-camera 5s ease-out both;
+  animation: splash-camera 2.6s cubic-bezier(0.65, 0, 0.35, 1) both;
 }
 .splash-scene-shade {
   position: absolute;
@@ -2802,14 +2800,15 @@ html[data-splash-seen="1"] .splash-screen {
   position: absolute;
   z-index: 2;
   left: 50%;
-  bottom: 8%;
+  top: 50%;
   width: min(25vw, 330px);
   height: 35px;
   border-radius: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   background: #030816c2;
   filter: blur(18px);
-  animation: splash-shadow 5s ease-in both;
+  opacity: 0;
+  will-change: transform, opacity;
 }
 .splash-sign {
   position: absolute;
@@ -2821,7 +2820,7 @@ html[data-splash-seen="1"] .splash-screen {
   align-items: center;
   opacity: 0;
   transform-origin: center bottom;
-  animation: splash-sign-pass 2.8s cubic-bezier(0.25, 0.1, 0.5, 1) both;
+  animation: splash-sign-pass 1.2s cubic-bezier(0.25, 0.1, 0.5, 1) both;
 }
 .splash-sign--left {
   --far-x: -5vw;
@@ -2868,12 +2867,6 @@ html[data-splash-seen="1"] .splash-screen {
   }
   to {
     transform: scale(1.09);
-  }
-}
-@keyframes splash-shadow {
-  to {
-    transform: translateX(-50%) scale(0.1);
-    opacity: 0;
   }
 }
 @keyframes splash-sign-pass {
