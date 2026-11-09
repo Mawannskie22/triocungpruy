@@ -1950,14 +1950,15 @@ input[type="text"],
   border: 1px solid var(--line);
 }
 .officer-page {
-  padding: 96px 18px 70px;
+  padding: 0;
   background: #f2f0e9;
 }
 .officer-frame {
   display: grid;
-  grid-template-columns: 222px minmax(0, 1fr);
-  width: min(100%, 1450px);
-  margin: 0 auto;
+  grid-template-columns: clamp(200px, 16.666%, 320px) minmax(0, 1fr);
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
   background: #f2f0e9;
 }
 .officer-sidebar {
@@ -2284,7 +2285,7 @@ input[type="text"],
 }
 @media (max-width: 700px) {
   .officer-page {
-    padding: 76px 0 28px;
+    padding: 20px 0 28px;
     background: #fff;
   }
   .officer-sheet {
@@ -2386,5 +2387,505 @@ input[type="text"],
   .officer-report-status {
     max-width: 98px;
     text-align: right;
+  }
+}
+
+/* Officer login */
+.officer-login-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 40px 18px;
+  background: #f2f0e9;
+}
+.officer-login-card {
+  width: min(100%, 440px);
+  padding: clamp(24px, 5vw, 40px);
+  background: #fff;
+  border: 1px solid #e6e2d9;
+  border-radius: 16px;
+}
+.officer-login-brand {
+  display: block;
+  margin-bottom: 34px;
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: -0.06em;
+}
+.officer-login-brand span {
+  color: #a67900;
+}
+.officer-login-card h1 {
+  margin: 8px 0 6px;
+  font-size: clamp(2rem, 5vw, 2.6rem);
+}
+.officer-login-card > p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+.officer-login-card input {
+  width: 100%;
+  padding: 13px 15px;
+  border: 1px solid #d6d2c7;
+  border-radius: 3px;
+  background: #fcfbf8;
+  color: var(--ink);
+}
+.officer-login-card form .button {
+  width: 100%;
+  margin-top: 24px;
+}
+.officer-login-hint {
+  display: grid;
+  gap: 2px;
+  margin-top: 22px;
+  padding: 12px 14px;
+  border: 1px dashed #d6d2c7;
+  border-radius: 6px;
+  font-size: 0.82rem;
+}
+.officer-login-hint strong {
+  color: #866500;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+}
+.officer-login-back {
+  display: inline-block;
+  margin-top: 22px;
+  font-size: 0.85rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.officer-login-loading {
+  color: var(--muted);
+}
+
+/* Officer shell */
+.officer-sidebar {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.officer-sidebar-label {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+.officer-sidebar-nav {
+  display: grid;
+  gap: 4px;
+}
+.officer-sidebar-nav a {
+  display: block;
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: #4c493f;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.officer-sidebar-nav a:hover {
+  background: rgba(26, 26, 26, 0.05);
+}
+.officer-sidebar-nav a.active {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: inset 3px 0 0 var(--gold);
+}
+.officer-sidebar-footer {
+  margin-top: auto;
+  padding-top: 22px;
+  border-top: 1px solid #e2ded3;
+}
+.officer-sidebar-footer strong {
+  font-size: 0.9rem;
+}
+.officer-sidebar-footer span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+.officer-logout {
+  width: 100%;
+  margin-top: 12px;
+  padding: 9px 12px;
+  border: 1px solid #d6d2c7;
+  border-radius: 4px;
+  background: transparent;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+.officer-logout:hover {
+  background: #fff;
+}
+.officer-mobile-nav {
+  display: none;
+}
+.officer-guard-loading {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  background: #f2f0e9;
+}
+
+@media (max-width: 1050px) {
+  .officer-mobile-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 18px 0;
+    overflow-x: auto;
+  }
+  .officer-mobile-nav a {
+    flex: none;
+    padding: 8px 12px;
+    border: 1px solid #e6e2d9;
+    border-radius: 999px;
+    background: #fff;
+    font-size: 0.82rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .officer-mobile-nav a.active {
+    border-color: var(--ink);
+    background: var(--ink);
+    color: #fff;
+  }
+  .officer-mobile-nav button {
+    flex: none;
+    margin-left: auto;
+    padding: 8px 12px;
+    border: 1px solid #d6d2c7;
+    border-radius: 999px;
+    background: transparent;
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+}
+
+/* Officer dashboard */
+.officer-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.officer-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+.officer-kpi {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 16px 18px;
+  border: 1px solid #e6e2d9;
+  border-radius: 12px;
+  background: #fff;
+}
+.officer-kpi > span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.officer-kpi strong {
+  font-size: 2rem;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.officer-kpi small {
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+.officer-kpi:nth-child(3) strong {
+  color: #9b5100;
+}
+.officer-kpi:nth-child(4) strong {
+  color: #247440;
+}
+.officer-chart-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.officer-card {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid #e6e2d9;
+  border-radius: 12px;
+  background: #fff;
+}
+.officer-chart-wide {
+  grid-column: span 2;
+}
+.officer-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.officer-card-head h2 {
+  margin: 0;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+}
+.officer-card-head span {
+  color: var(--muted);
+  font-size: 0.74rem;
+}
+.officer-donut-wrap,
+.officer-radial-wrap {
+  position: relative;
+}
+.officer-donut-center,
+.officer-radial-center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  pointer-events: none;
+}
+.officer-donut-center strong {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+.officer-donut-center span,
+.officer-radial-center span {
+  color: var(--muted);
+  font-size: 0.7rem;
+}
+.officer-radial-center strong {
+  color: #247440;
+  font-size: 1.7rem;
+  line-height: 1;
+}
+.officer-legend {
+  display: grid;
+  gap: 6px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.officer-legend li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+}
+.officer-legend li strong {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+.officer-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.officer-radial-note {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.76rem;
+  text-align: center;
+}
+.officer-radial-note strong {
+  color: var(--ink);
+}
+.officer-activity-card {
+  margin-top: 0;
+}
+.officer-activity {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.officer-activity li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid #f0ece2;
+}
+.officer-activity li:first-child {
+  border-top: 0;
+}
+.officer-activity-dot {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+.officer-activity div {
+  display: grid;
+}
+.officer-activity div strong {
+  font-size: 0.82rem;
+}
+.officer-activity div span {
+  color: var(--muted);
+  font-size: 0.74rem;
+}
+.officer-activity-meta {
+  margin-left: auto;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-align: right;
+}
+.officer-activity-meta small {
+  display: block;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+.officer-text-button {
+  flex: none;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 1100px) {
+  .officer-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .officer-chart-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .officer-chart-wide {
+    grid-column: span 2;
+  }
+}
+@media (max-width: 700px) {
+  .officer-kpis,
+  .officer-chart-grid {
+    grid-template-columns: 1fr;
+  }
+  .officer-chart-wide {
+    grid-column: auto;
+  }
+}
+
+/* Officer tickets */
+.officer-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 26px 0 4px;
+}
+.officer-search {
+  flex: 1 1 260px;
+  min-height: 40px;
+  padding: 9px 12px;
+  border: 1px solid #d0cbc0;
+  border-radius: 4px;
+  background: #fff;
+  color: var(--ink);
+}
+.officer-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.officer-filter-bar button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 11px;
+  border: 1px solid #e0dbcd;
+  border-radius: 999px;
+  background: #fff;
+  color: #4c493f;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.officer-filter-bar button span {
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: #f2eee3;
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+}
+.officer-filter-bar button.active {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
+}
+.officer-filter-bar button.active span {
+  background: rgba(255, 255, 255, 0.18);
+}
+.officer-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+.officer-pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.officer-pagination-controls button {
+  min-width: 30px;
+  min-height: 30px;
+  padding: 4px 8px;
+  border: 1px solid #e0dbcd;
+  border-radius: 4px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+.officer-pagination-controls button:hover:not(:disabled) {
+  background: #f9f7ef;
+}
+.officer-pagination-controls button.active {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
+}
+.officer-pagination-controls button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.officer-update label span {
+  color: var(--red);
+}
+
+@media (max-width: 700px) {
+  .officer-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .officer-search {
+    flex: none;
+    width: 100%;
+  }
+  .officer-filter-bar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .officer-filter-bar button {
+    flex: none;
   }
 }

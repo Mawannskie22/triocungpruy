@@ -25,12 +25,10 @@ export function Footer() {
         <div>
           <h3>Bantuan</h3>
           <a href="mailto:halo@laporbalik.example">halo@laporbalik.example</a>
-          <p>Prototipe untuk keperluan demo. Laporan tersimpan hanya di browser perangkat ini.</p>
         </div>
       </div>
       <div className="container footer-bottom">
         <span>© 2026 Lapor Balik</span>
-        <span>Data simulasi untuk keperluan demo</span>
       </div>
     </footer>
   );

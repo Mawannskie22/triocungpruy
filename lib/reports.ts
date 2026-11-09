@@ -31,6 +31,10 @@ export function readReports(): Report[] {
   }
 }
 
+export function setReports(reports: Report[]): boolean {
+  return writeReports(reports);
+}
+
 function isReport(value: unknown): value is Report {
   if (!value || typeof value !== "object") return false;
   const report = value as Partial<Report>;
@@ -133,6 +137,9 @@ export function advanceDemoStatus(
   }
   if (resolutionPhoto && status !== "selesai") {
     return { ok: false, error: "Bukti foto hanya dapat dilampirkan pada tahap selesai." };
+  }
+  if (status === "selesai" && !resolutionPhoto) {
+    return { ok: false, error: "Foto bukti penyelesaian wajib diunggah." };
   }
   if (
     resolutionPhoto &&

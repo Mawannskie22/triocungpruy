@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
 import "./globals.css";
 
 const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ["latin"], display: "swap" });
@@ -14,12 +12,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="id" className={plusJakartaSans.className}>
-      <body>
-        <Navbar />
-        {children}
-        <Footer />
-      </body>
+    <html lang="id" className={plusJakartaSans.className} data-scroll-behavior="smooth">
+      <body>{children}</body>
     </html>
   );
 }
