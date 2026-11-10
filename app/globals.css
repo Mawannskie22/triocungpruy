@@ -2276,12 +2276,7 @@ input[type="text"],
 /* A city field, with the reports as the only bright marks. */
 .report-map-section {
   padding: 95px 0 100px;
-  background: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    #fffaf0 45%,
-    #fff3cc 100%
-  );
+  background: linear-gradient(180deg, #ffffff 0%, #fffaf0 45%, #fff3cc 100%);
   border-bottom: 1px solid #d9d2c4;
 }
 
@@ -2907,7 +2902,6 @@ html[data-splash-seen="1"] .splash-screen {
     transform: translate(-50%, -50%) translateY(38vh) scale(1.05);
   }
   .splash-car-shadow {
-    bottom: 13%;
     width: 45vw;
   }
   .splash-sign-face {

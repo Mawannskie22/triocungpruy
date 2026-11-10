@@ -7,8 +7,8 @@ import type { ReportCategory } from "@/types/report";
 
 const SESSION_KEY = "lapor-balik-splash-seen-v1";
 const DRIVE_DURATION = 2600;
-const ARRIVAL_HOLD = 300;
 const EXIT_DURATION = 750;
+const FINAL_ROAD_PROGRESS = 0.7;
 
 const roadsideSigns: { category: ReportCategory; label: string; side: "left" | "right" }[] = [
   { category: "jalan-rusak", label: "Jalan rusak", side: "left" },
@@ -17,7 +17,6 @@ const roadsideSigns: { category: ReportCategory; label: string; side: "left" | "
   { category: "sampah", label: "Sampah", side: "right" },
 ];
 
-// The car pulls away from rest and settles again at the monument.
 function easeInOutCubic(value: number): number {
   return value < 0.5 ? 4 * value ** 3 : 1 - (-2 * value + 2) ** 3 / 2;
 }
@@ -57,28 +56,22 @@ export function SplashScreen() {
       const percent = Math.floor(progress * 100);
       const viewportHeight = window.innerHeight;
       const isMobile = window.innerWidth <= 700;
-      const startY = viewportHeight * (isMobile ? 0.88 : 0.86);
-      const endY = viewportHeight * (isMobile ? 0.52 : 0.47);
-      const eased = easeInOutCubic(progress);
-      const y = startY + (endY - startY) * eased;
-      const scale = 1.05 - 0.91 * eased;
-
-      // Small secondary motion so the car rides the road instead of sliding on rails.
-      // Amplitude follows the scale, which keeps it subtle once the car is far away.
-      const bob = Math.sin(progress * Math.PI * 7) * 3.6 * scale;
-      const sway = Math.sin(progress * Math.PI * 3) * 5 * scale;
-      const roll = Math.sin(progress * Math.PI * 3) * 0.5 * (0.4 + scale);
+      const roadProgress = easeInOutCubic(progress) * FINAL_ROAD_PROGRESS;
+      const scale = 1.05 - 0.91 * roadProgress;
+      const roadEnd = viewportHeight * (isMobile ? 0.51 : 0.505);
+      const roadStart = viewportHeight * (isMobile ? 1 : 1.07);
+      const tyreY = roadStart + (roadEnd - roadStart) * roadProgress;
 
       if (carRef.current) {
         const car = carRef.current;
-        car.style.transform = `translate(-50%, -50%) translate(${sway}px, ${y - viewportHeight / 2 + bob}px) rotate(${roll}deg) scale(${scale})`;
+        const carHeight = car.offsetHeight || car.offsetWidth * (848 / 994);
+        const carCenterY = tyreY - (carHeight * scale) / 2;
+        car.style.transform = `translate(-50%, -50%) translateY(${carCenterY - viewportHeight / 2}px) scale(${scale})`;
 
-        // Keep the shadow glued to the tyres so the car never looks airborne.
         if (shadowRef.current) {
-          const carHeight = car.offsetHeight || car.offsetWidth * (848 / 994);
-          const bottomY = y + (carHeight / 2) * scale;
-          shadowRef.current.style.opacity = "1";
-          shadowRef.current.style.transform = `translate(-50%, -50%) translate(${sway * 0.5}px, ${bottomY - viewportHeight / 2}px) scale(${scale})`;
+          shadowRef.current.style.opacity = "0.8";
+          shadowRef.current.style.transform = `translate(-50%, -50%) translateY(${tyreY - viewportHeight / 2}px) scale(${scale})`;
+          shadowRef.current.style.filter = `blur(${Math.max(2, 12 * scale)}px)`;
         }
       }
       if (progressFillRef.current) {
@@ -93,9 +86,9 @@ export function SplashScreen() {
       if (progress < 1) {
         frame.current = window.requestAnimationFrame(drive);
       } else {
-        progressLabelRef.current!.textContent = "TIBA DI MONAS";
+        progressLabelRef.current!.textContent = "SIAP MASUK";
+        setLeaving(true);
         timers.current = [
-          window.setTimeout(() => setLeaving(true), ARRIVAL_HOLD),
           window.setTimeout(() => {
             try {
               sessionStorage.setItem(SESSION_KEY, "1");
@@ -104,7 +97,7 @@ export function SplashScreen() {
             }
             document.documentElement.dataset.splashSeen = "1";
             setVisible(false);
-          }, ARRIVAL_HOLD + EXIT_DURATION),
+          }, EXIT_DURATION),
         ];
       }
     };
